@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fork of Exercise 1: SVG Fundamentals</title>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <svg width="960" height="500" fill="white">
+      <!-- gradients -->
+      <defs>
+        <radialGradient id="sky-gradient" cx="50%" cy="50%" r="75%">
+          <stop offset="0%" stop-color="aliceblue">
+            <animate
+              attributeName="stop-color"
+              values="aliceblue; indigo; aliceblue"
+              dur="15s"
+              repeatCount="indefinite"
+            ></animate>
+          </stop>
+          <stop offset="100%" stop-color="steelblue"></stop>
+        </radialGradient>
+        <linearGradient id="land1-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="aliceblue">
+            <animate
+              attributeName="stop-color"
+              values="aliceblue; steelblue; aliceblue"
+              dur="15s"
+              repeatCount="indefinite"
+            ></animate>
+          </stop>
+          <stop offset="60%" stop-color="midnightblue"></stop>
+        </linearGradient>
+        <linearGradient
+          id="land2-gradient"
+          x1="50%"
+          y1="20%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stop-color="aliceblue">
+            <animate
+              attributeName="stop-color"
+              values="aliceblue; steelblue; aliceblue"
+              dur="15s"
+              repeatCount="indefinite"
+            ></animate>
+          </stop>
+          <stop offset="100%" stop-color="midnightblue"></stop>
+        </linearGradient>
+      </defs>
+      <!-- sky backdrop -->
+      <rect
+        x="0"
+        y="0"
+        width="960"
+        height="500"
+        fill="url(#sky-gradient)"
+      ></rect>
+      <!-- sun -->
+      <circle cx="480" cy="250" r="100">
+        <animate
+          attributeName="cy"
+          values="250px; 350px; 250px"
+          dur="15s"
+          repeatCount="indefinite"
+        />
+      </circle>
+      <!-- landscape1 -->
+      <path
+        d="M 0 300 Q 250 100 960 400 L 960 500 L 0 500 Z"
+        fill="url(#land1-gradient)"
+      ></path>
+      <!-- landscape2 -->
+      <path
+        d="M 0 375 C 400 375 500 150 960 250 L 960 500 L 0 500 Z"
+        fill="url(#land2-gradient)"
+      ></path>
+    </svg>
+  </body>
+</html>
