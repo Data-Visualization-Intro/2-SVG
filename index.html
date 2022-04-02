@@ -37,27 +37,22 @@
         .startAngle(Math.PI / 2 + 0.2)
         .endAngle((Math.PI * 3) / 2 - 0.2);
 
-      const mySVG = `<svg width=${width} height=${height}>
+      const mySVG = `
+      <svg width=${width} height=${height}>
 
         <g transform=${`translate(${centerX},${centerY})`}>
-      <circle
-        r=${centerY - strokeWidth / 2}
-        fill="yellow"
-        stroke="black"
-        stroke-width=${strokeWidth}
-      />
-      <circle cx=${-eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
-      <circle cx=${eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
-      <path d="M6 2C10 23 35 66 103 66C171 66 192 23 194 2" stroke="black" stroke-width="12" fill="none" />
-      <path d=${mouthArc()} />
-    </g>
+          <circle
+            r=${centerY - strokeWidth / 2}
+            fill="yellow"
+            stroke="black"
+            stroke-width=${strokeWidth}
+          />
+          <circle cx=${-eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
+          <circle cx=${eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
 
 
-    <g transform=${`translate(${centerX},${centerY})`} stroke="black" stoke-width="2">
-      <circle cx="0" cy="0" r="4" />
-      <line x1=${-centerX} x2=${centerX} y1="0" y2="0" />
-      <line x1="0" x2="0" y1=${-centerY} y2=${centerY} />
-    </g>
+          <path d="M 117,23 A 120, 120, 0, 0, 1, -117, 23  L -98, 19 A100, 100, 0, 0, 0, 98, 19 Z"></path>
+        </g>
     
       </svg>`;
 

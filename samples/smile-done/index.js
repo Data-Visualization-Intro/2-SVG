@@ -38,6 +38,3 @@ const mySVG = `
   `;
 svg.innerHTML = mySVG;
 document.getElementById("root").append(svg);
-
-// const rootElement = document.getElementById("root");
-// rootElement.innerHTML = mySVG;

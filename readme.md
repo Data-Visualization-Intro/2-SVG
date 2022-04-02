@@ -6,6 +6,21 @@ Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimen
 
 [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics)
 
+SVG is widely used in web development as an image format.
+
+Create a new `index.html` file in the `app` folder and add:
+
+```html
+<style>
+  img {
+    width: 100px;
+  }
+</style>
+<img src="../samples/illustrations/exports/SVG/pizza.svg" alt="" />
+<img src="../samples/illustrations/exports/SVG/rat.svg" alt="" />
+<img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
+```
+
 ## HTML and CSS
 
 We discussed HTML and CSS for data visualization.
@@ -384,8 +399,6 @@ const strokeWidth = 20;
 const eyeOffsetX = 90;
 const eyeOffsetY = 70;
 const eyeRadius = 30;
-const mouthWidth = 100;
-const mouthRadius = 20;
 
 const mySVG = `<svg width=${width} height=${height}>
 
@@ -414,6 +427,18 @@ rootElement.innerHTML = mySVG;
 
 ## D3
 
+Create a smile shape in Figma, export it as SVG and add it to the face. e.g.:
+
+`<path d="M6 2C10 23 35 66 103 66C171 66 192 23 194 2" stroke="black" stroke-width="12" fill="none" />`
+
+This will not work. The coordinates are wrong. We need this instead:
+
+`<path d="M 117,23 A 120, 120, 0, 0, 1, -117, 23 L -98, 19 A100, 100, 0, 0, 0, 98, 19 Z"></path>`
+
+But the above is extremely difficult to write.
+
+Enter [D3]()
+
 <!-- https://datavis.tech/datavis-2020-episode-7-lets-make-a-face-part-iii-with-react-d3/ -->
 
 Import the D3 global object:
@@ -440,7 +465,10 @@ Import the D3 global object:
 
 https://github.com/d3/d3/blob/main/API.md
 
+An [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.
+
 https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc
+
 https://en.wikipedia.org/wiki/Pi
 pi - ratio of a circle's circumference to its diameter.
 
