@@ -1,7 +1,3 @@
-const dim = {
-  width: 960,
-  height: 500,
-};
 const width = 960;
 const height = 500;
 const centerX = width / 2;
@@ -20,7 +16,12 @@ const mouthArc = d3
   .startAngle(Math.PI / 2 + 0.2)
   .endAngle((Math.PI * 3) / 2 - 0.2);
 
-const mySVG = `<svg width=${width} height=${height}>
+const svg = document.createElement("svg");
+svg.setAttribute("width", width);
+svg.setAttribute("height", height);
+
+const mySVG = `
+<svg width=${width} height=${height}>
     <g transform=${`translate(${centerX},${centerY})`}>
       <circle
         r=${centerY - strokeWidth / 2}
@@ -33,7 +34,10 @@ const mySVG = `<svg width=${width} height=${height}>
 
       <path d=${mouthArc()} />
     </g>
-  </svg>`;
+    </svg>
+  `;
+svg.innerHTML = mySVG;
+document.getElementById("root").append(svg);
 
-const rootElement = document.getElementById("root");
-rootElement.innerHTML = mySVG;
+// const rootElement = document.getElementById("root");
+// rootElement.innerHTML = mySVG;

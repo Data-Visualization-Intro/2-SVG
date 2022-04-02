@@ -5,8 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      svg {
+        border: 1px solid gray;
+      }
+      g {
+        transform: translate(50%, 50%);
+      }
+    </style>
   </head>
   <body>
+    <p>Random circles</p>
+    <div></div>
+
     <script>
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -15,24 +29,28 @@
       svg.setAttribute("height", height);
       document.body.appendChild(svg);
 
-      const n = 30;
-
-      const values = [4, 7, 1, 9, 5, 6, 2, 3, 8];
-      function rando() {
-        return values[Math.floor(Math.random() * values.length)];
-      }
+      const n = 4;
 
       for (let i = 0; i < n; i++) {
-        const rect = document.createElementNS(
+        const circle = document.createElementNS(
           "http://www.w3.org/2000/svg",
-          "rect"
+          "circle"
         );
-        rect.setAttribute("x", i * 36);
-        rect.setAttribute("width", 20);
-        rect.setAttribute("height", rando() * 40);
-        rect.setAttribute("fill", "#dddddd");
-        svg.appendChild(rect);
+        circle.setAttribute("cx", i * 100);
+        circle.setAttribute("cy", Math.random() * 100 + 300);
+        circle.setAttribute("r", Math.random() * 100);
+        circle.setAttribute("fill", "red");
+        svg.appendChild(circle);
       }
     </script>
   </body>
 </html>
+
+<!-- <circle
+    cx="60"
+    cy="60"
+    r="50"
+    stroke="black"
+    stroke-width="6"
+    fill="green"
+    ></circle> -->
