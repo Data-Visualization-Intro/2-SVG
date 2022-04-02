@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="icon"
+      href="../samples/illustrations/exports/SVG/rat.svg"
+      type="image/svg+xml"
+    />
+
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      svg {
+        border: 2px solid gray;
+      }
+      g {
+        transform: translate(480px, 480px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../samples/color-codes/data.js"></script>
+
+    <script>
+      const width = 960;
+      const height = 960;
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", width);
+      svg.setAttribute("height", height);
+
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+      svg.appendChild(group);
+
+      const pieArc = d3.arc().innerRadius(0).outerRadius(360);
+
+      let colorApp = "";
+
+      for (let i = 0; i < colorNames.length; i++) {
+        colorApp += `<path fill=${hexCodes[i]} d=${pieArc({
+          startAngle: (i / colorNames.length) * 2 * Math.PI,
+          endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+        })} />`;
+      }
+
+      group.innerHTML = colorApp;
+      console.log(group);
+
+      document.body.appendChild(svg);
+
+      //   const colorApp = colorNames
+      //     .map(
+      //       (d, i) => `<div style="background-color: ${hexCodes[i]}}>${d[i]}</div`
+      //     )
+      //     .join("");
+    </script>
+  </body>
+</html>
