@@ -1,12 +1,6 @@
-# SVG and D3
+# SVG
 
-## SVG
-
-Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation.
-
-SVG is to images what illustration is to photography.
-
-[Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
+Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation - [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
 For all but the simplest illustrations you typically do not code SVG by hand. However it is very important to understand the format as it is a very important tool for data visualization.
 
@@ -530,9 +524,9 @@ And use the browser's console to log it out. D3 is a huge collection of function
 
 One place to access documentation is on the project's [Github page](https://github.com/d3/d3/blob/main/API.md).
 
-In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is diffiult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
+In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is difficult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
 
-(Here's an [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.)
+Working with arcs can be [complex](https://codepen.io/lingtalfi/pen/yaLWJG). (There's a simpler D3 method called pie which is useful for creating pie charts.)
 
 Note that D3 arc uses [pi](https://en.wikipedia.org/wiki/Pi) - the ratio of a circle's circumference to its diameter.
 
@@ -648,7 +642,7 @@ const mySVG = `
     </g>
   `;
 svg.innerHTML = mySVG;
-document.body.appendChild(svg);
+document.querySelector("#root").append(svg);
 ```
 
 ## Instructor Notes
@@ -718,8 +712,10 @@ for (let i = 0; i < colorNames.length; i++) {
 svg.innerHTML = colorApp;
 console.log(svg);
 
-document.body.appendChild(svg);
+document.querySelector("#root").append(svg);
 ```
+
+Review the documentation for `arc`.
 
 ```js
 const width = 960;
@@ -733,7 +729,7 @@ const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
 svg.appendChild(group);
 
-const pieArc = d3.arc().innerRadius(0).outerRadius(960);
+const pieArc = d3.arc().innerRadius(0).outerRadius(360);
 
 let colorApp = "";
 
@@ -747,7 +743,7 @@ for (let i = 0; i < colorNames.length; i++) {
 group.innerHTML = colorApp;
 console.log(group);
 
-document.body.appendChild(svg);
+document.querySelector("#root").append(svg);
 ```
 
 ```js
@@ -759,75 +755,80 @@ for (let i = 0; i < colorNames.length; i++) {
 }
 ```
 
-Simplify this with d3.pie.
+## eventListener
+
+Add an event listener that will display the color information when one of the arcs is clicked on.
+
+Add a div to the body:
+
+```html
+<div class="info">
+  <h3>Select a color</h3>
+</div>
+```
+
+Add supporting CSS:
+
+```css
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+g {
+  transform: translate(480px, 480px);
+}
+.info {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.colorChip {
+  width: 80px;
+  height: 60px;
+}
+```
+
+We'll begin by using [ternary expressions]() in our callback just in case the useer clicks elsewhere in the document
+
+```js
+// eventListener
+document.addEventListener("click", showColor);
+
+// eventListener callback function
+function showColor() {
+  let colorId = event.target.dataset.idx;
+  let infoContent = `
+    <h3>Color name: ${colorId ? colorNames[colorId] : "nothing"}<h3>
+    <h3>Color hex code: ${colorId ? hexCodes[colorId] : "nothing"}<h3>
+    <div class="colorChip" style="background-color: ${hexCodes[colorId]}">
+    </div>`;
+  document.querySelector(".info").innerHTML = infoContent;
+}
+
+const width = 960;
+const height = 960;
+
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+svg.setAttribute("width", width);
+svg.setAttribute("height", height);
+svg.appendChild(group);
+
+const pieArc = d3.arc().innerRadius(0).outerRadius(360);
+
+let colorApp = "";
+
+for (let i = 0; i < colorNames.length; i++) {
+  colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
+    startAngle: (i / colorNames.length) * 2 * Math.PI,
+    endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+  })} />`;
+}
+
+group.innerHTML = colorApp;
+
+document.querySelector("#root").append(svg);
+```
 
 ---
-
-```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
-
-const n = 4;
-
-for (let i = 0; i < n; i++) {
-  const circle = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
-  );
-  circle.setAttribute("cx", i * 100);
-  circle.setAttribute("cy", Math.random() * 100 + 300);
-  circle.setAttribute("r", Math.random() * 100);
-  circle.setAttribute("fill", "red");
-  svg.appendChild(circle);
-}
-```
-
-```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
-
-const n = 60;
-
-for (let i = 0; i < n; i++) {
-  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  rect.setAttribute("x", i * 20);
-  rect.setAttribute("width", 20);
-  rect.setAttribute("height", height);
-  rect.setAttribute("fill", "#ddd");
-  svg.appendChild(rect);
-}
-```
-
-```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
-
-const n = 30;
-
-const values = [4, 7, 1, 9, 5, 6, 2, 3, 8];
-
-function rando() {
-  return values[Math.floor(Math.random() * values.length)];
-}
-
-for (let i = 0; i < n; i++) {
-  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  rect.setAttribute("x", i * 36);
-  rect.setAttribute("width", 20);
-  rect.setAttribute("height", rando() * 40);
-  rect.setAttribute("fill", "#dddddd");
-  svg.appendChild(rect);
-}
-```

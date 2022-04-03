@@ -16,30 +16,53 @@
     <style>
       body {
         margin: 0;
-      }
-      svg {
-        border: 2px solid gray;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
       }
       g {
         transform: translate(480px, 480px);
+      }
+      .info {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+      }
+      .colorChip {
+        width: 80px;
+        height: 60px;
       }
     </style>
   </head>
   <body>
     <div id="root"></div>
 
+    <div class="info">
+      <h3>Select a color</h3>
+    </div>
+
     <script src="../samples/color-codes/data.js"></script>
 
     <script>
+      document.addEventListener("click", showColor);
+
+      function showColor() {
+        let colorId = event.target.dataset.idx;
+        let infoContent = `
+        <h3>Color name: ${colorId ? colorNames[colorId] : "nothing"}<h3>
+        <h3>Color hex code: ${colorId ? hexCodes[colorId] : "nothing"}<h3>
+          <div class="colorChip" style="background-color: ${
+            hexCodes[colorId]
+          }"></div>`;
+        document.querySelector(".info").innerHTML = infoContent;
+      }
+
       const width = 960;
       const height = 960;
 
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
       svg.setAttribute("width", width);
       svg.setAttribute("height", height);
-
-      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
       svg.appendChild(group);
 
       const pieArc = d3.arc().innerRadius(0).outerRadius(360);
@@ -47,16 +70,15 @@
       let colorApp = "";
 
       for (let i = 0; i < colorNames.length; i++) {
-        colorApp += `<path fill=${hexCodes[i]} d=${pieArc({
+        colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
           startAngle: (i / colorNames.length) * 2 * Math.PI,
           endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
         })} />`;
       }
 
       group.innerHTML = colorApp;
-      console.log(group);
 
-      document.body.appendChild(svg);
+      document.querySelector("#root").append(svg);
 
       //   const colorApp = colorNames
       //     .map(
