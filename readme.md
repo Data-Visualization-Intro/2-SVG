@@ -726,6 +726,17 @@ Create `data.js` with `colorNames` and `hexCodes` arrays and add it to `index.ht
 <script src="../samples/color-codes/data.js"></script>
 ```
 
+```css
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+g {
+  transform: translate(480px, 480px);
+}
+```
+
 ```js
 let colorApp = "";
 
@@ -800,75 +811,45 @@ for (let i = 0; i < colorNames.length; i++) {
 }
 ```
 
-Simplify this with d3.pie.
+### Event Listener
 
----
+```css
+.info {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.colorChip {
+  width: 80px;
+  height: 60px;
+}
+```
+
+```html
+<div class="info">
+  <h3>Select a color</h3>
+</div>
+```
 
 ```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
+document.addEventListener("click", showColor);
 
-const n = 4;
-
-for (let i = 0; i < n; i++) {
-  const circle = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
-  );
-  circle.setAttribute("cx", i * 100);
-  circle.setAttribute("cy", Math.random() * 100 + 300);
-  circle.setAttribute("r", Math.random() * 100);
-  circle.setAttribute("fill", "red");
-  svg.appendChild(circle);
+function showColor(event) {
+  if (!event.target.dataset.idx) return;
+  let colorId = event.target.dataset.idx;
+  let infoContent = `
+    <h3>Color name: ${colorId}<h3>
+    <h3>Color hex code: ${hexCodes[colorId]}<h3>
+    <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
+  document.querySelector(".info").innerHTML = infoContent;
 }
 ```
 
 ```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
-
-const n = 60;
-
-for (let i = 0; i < n; i++) {
-  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  rect.setAttribute("x", i * 20);
-  rect.setAttribute("width", 20);
-  rect.setAttribute("height", height);
-  rect.setAttribute("fill", "#ddd");
-  svg.appendChild(rect);
-}
-```
-
-```js
-const width = window.innerWidth;
-const height = window.innerHeight;
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", width);
-svg.setAttribute("height", height);
-document.body.appendChild(svg);
-
-const n = 30;
-
-const values = [4, 7, 1, 9, 5, 6, 2, 3, 8];
-
-function rando() {
-  return values[Math.floor(Math.random() * values.length)];
-}
-
-for (let i = 0; i < n; i++) {
-  const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  rect.setAttribute("x", i * 36);
-  rect.setAttribute("width", 20);
-  rect.setAttribute("height", rando() * 40);
-  rect.setAttribute("fill", "#dddddd");
-  svg.appendChild(rect);
+for (let i = 0; i < colorNames.length; i++) {
+  colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
+    startAngle: (i / colorNames.length) * 2 * Math.PI,
+    endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+  })} />`;
 }
 ```
