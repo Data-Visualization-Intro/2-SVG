@@ -2,8 +2,8 @@
 
 Today we will be building two pages with SVG:
 
-- a [smiley face emoji](https://dataviz-emoji.netlify.app/)
-- a [hexadecimal color browser](https://dataviz-hex.netlify.app/)
+- a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
+- a [hexadecimal color browser](https://dataviz-exercises.netlify.app/css-colors/index.html)
 
 We will continue to work with JavaScript - adding some additional methods to our toolbelt - and will have a brief introduction to a single method from [D3](https://d3js.org).
 
