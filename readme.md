@@ -6,6 +6,8 @@ For all but the simplest illustrations you typically do not code SVG by hand. Ho
 
 SVG is widely used in web development as an image format.
 
+Create a new HTML file (`index.html`) in the app folder in order to run the following samples.
+
 1. as the `src` for an image tag
 
 Create a new `index.html` file in the `app` folder and add:
@@ -48,7 +50,7 @@ Create a new `index.html` file in the `app` folder and add:
 <div class="icn trashcan"></div>
 ```
 
-3. You can even use them as favicons
+3. You can use them as favicons:
 
 ```html
 <link
@@ -57,6 +59,8 @@ Create a new `index.html` file in the `app` folder and add:
   type="image/svg+xml"
 />
 ```
+
+And because they are just text, they can easily be made [responsive](https://www.viget.com/articles/responsive-logos-part-2-making-logos-truly-responsive-with-svg/).
 
 ## SVG Shapes
 
@@ -94,11 +98,9 @@ We've already looked at one simple SVG element.
 </svg>
 ```
 
-Note the default size of the SVG element in the HTML document - 300px x 150px - and the center of the circle (0,0) is at the top left hand corner.
+Note the default size of the SVG element - 300px x 150px - and the center of the circle - (0,0) - at the top left hand corner. Anything falling outside the SVG container is clipped.
 
 To create a 200px x 200px circle we define a radius of 100.
-
-The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
 
 `<svg>` is an HTML tag however the contents of the SVG tag is [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) - a domain specific language.
 
@@ -146,9 +148,9 @@ In order to match the layout of the HTML/CSS circles we worked on we need to exp
 />
 ```
 
-Note the the top left corner is the 0,0 point for the rectangle.
+The top left corner of the document is the point (0,0), or point of origin.
 
-The top left corner of the document is the point (0,0), or point of origin. Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom.
+Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom.
 
 ![grid](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Positions/canvas_default_grid.png)
 
@@ -161,7 +163,7 @@ It is common to surround the SVG with a `<g>` - an SVG group tag - and then move
 ```svg
 <svg style="border: 1px solid">
   <g style="transform: translate(50%, 50%)">
-    <circle cx="0" cy="0" r="50"  />
+...
   </g>
 </svg>
 ```
@@ -268,12 +270,12 @@ A `<path>` is the most general and commonly used shape in SVG.
 
 Using a path element you can draw rectangles (with or without rounded corners), circles, ellipses, polylines, and polygons - basically any of the other types of shapes.
 
-While creating complex paths using a text editor is definitely not recommended, understanding how they work is important and will allow you to identify and repair display issues in SVGs.
+While creating complex paths using a text editor is definitely not recommended. However understanding how they work is important and will allow you to identify and repair display issues in SVGs.
 
 The shape of a `<path>` element is defined by one parameter: `d`.
 
 - The "Move to" command is called with the letter M: `M 10 10`
-- An uppercase letter specifies absolute coordinates on the page, and a lowercase letter specifies relative coordinates
+- An uppercase letter specifies absolute coordinates on the page, and lowercase specifies relative coordinates
 - "Line To" - L takes two parameters — x and y coordinates — and draws a line from the current position to a new position
 - H draws a horizontal line, and V draws a vertical line:
 
@@ -336,11 +338,11 @@ Arcs are sections of circles or ellipses and use an `A`. They create pieces of c
          L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
 ```
 
-## Stroke
+### Stroke
 
-There are a few other attributes available to control the way a stroke is drawn on a line.
+There are attributes available to control the way a stroke is drawn on a line.
 
-### Linecaps
+#### Linecaps
 
 ```svg
 <line x1="40" x2="120" y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="butt"/>
@@ -348,7 +350,7 @@ There are a few other attributes available to control the way a stroke is drawn 
 <line x1="40" x2="120" y1="100" y2="100" stroke="black" stroke-width="20" stroke-linecap="round"/>
 ```
 
-### Dashes
+#### Dashes
 
 ```svg
 <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black"
@@ -366,7 +368,9 @@ Examine the gradient-animation directory in the samples folder.
 
 The SVG equivalent of writing a "Hello World" application is making a smiley face emoticon.
 
-[Figma](https://www.figma.com) is an application commonly used in web design. Create a free account and will start our face with it.
+[Figma](https://www.figma.com) is an application commonly used in web design.
+
+Create a free account and will start our face with it.
 
 - create 960 x 500 frame (featureless)
 - create face and eye shapes and position them
@@ -388,9 +392,11 @@ The SVG equivalent of writing a "Hello World" application is making a smiley fac
 </svg>
 ```
 
+Correct the values.
+
 ## Formulae
 
-Correct the values. Ideally we would like to use variables for the widths and heights to facilitate the creation of the artwork.
+Ideally we would like to use variables for the widths and heights to facilitate the creation of the artwork.
 
 Let's set up a simple grid first.
 
@@ -416,6 +422,11 @@ const centerY = height / 2;
 const mySVG = `<svg width=${width} height=${height}>
   <g transform=${`translate(${centerX},${centerY})`}>
     <circle cx="0" cy="0" r="4" />
+    <text x="0" y="0" class="small">0,0</text>
+    <text x="200" y="-200" class="small">x:200, y:-200</text>
+    <text x="200" y="200" class="small">x:200, y:200</text>
+    <text x="-200" y="200" class="small">x:-200, y:200</text>
+    <text x="-200" y="-200" class="small">x:-200, y:-200</text>
     <line x1="-480" x2="480" y1="0" y2="0" stroke="black" stroke-width="2" />
     <line x1="0" x2="" y1="-250" y2="250" stroke="black" stroke-width="2" />
   </g>
@@ -446,8 +457,6 @@ rootElement.innerHTML = mySVG;
 ```
 
 Reset the width and height values and add the face in a new group
-
-<!-- https://www.youtube.com/watch?v=QT5ef8dUyoo -->
 
 ```js
 const width = 960;
@@ -494,7 +503,7 @@ This will not work. The coordinates are wrong. We need this instead:
 
 `<path d="M 117,23 A 120, 120, 0, 0, 1, -117, 23 L -98, 19 A100, 100, 0, 0, 0, 98, 19 Z"></path>`
 
-But the above is extremely difficult to write.
+But the above is difficult to write by hand.
 
 Enter [D3](https://d3js.org).
 
@@ -645,15 +654,15 @@ svg.innerHTML = mySVG;
 document.querySelector("#root").append(svg);
 ```
 
-## Instructor Notes
+## Creating a Color Wheel
 
 Extract the color names and hexidecimal codes from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
 
 ```js
-> var keywords = document.querySelectorAll('[style="text-align: center"] code');
-> keywords[0];
-> keywords[0].innerText;
-> let keyArr = [...keywords];
+var keywords = document.querySelectorAll('[style="text-align: center"] code');
+keywords[0];
+keywords[0].innerText;
+let keyArr = [...keywords];
 ```
 
 No that we have an Array we use `Array.map()` to create a new Array with the variable name `colors` containing all the color names:
@@ -672,6 +681,8 @@ let hexes = hexArr.map((key) => key.innerText);
 ```
 
 Note that the colors array is 2 entries longer than the hex array. Examine and remove the duplicates in the colors array.
+
+<!-- let uniqueColors = [...new Set(colors)]; -->
 
 Create `data.js` with both the arrays and add it to `index.html`:
 
@@ -755,7 +766,7 @@ for (let i = 0; i < colorNames.length; i++) {
 }
 ```
 
-## eventListener
+## Event Listeners
 
 Add an event listener that will display the color information when one of the arcs is clicked on.
 
@@ -789,14 +800,15 @@ g {
 }
 ```
 
-We'll begin by using [ternary expressions]() in our callback just in case the useer clicks elsewhere in the document
+We'll begin by using [ternary expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) in our callback just in case the useer clicks elsewhere in the document
 
 ```js
 // eventListener
 document.addEventListener("click", showColor);
 
 // eventListener callback function
-function showColor() {
+function showColor(event) {
+  console.log(event.target);
   let colorId = event.target.dataset.idx;
   let infoContent = `
     <h3>Color name: ${colorId ? colorNames[colorId] : "nothing"}<h3>
@@ -829,6 +841,22 @@ for (let i = 0; i < colorNames.length; i++) {
 group.innerHTML = colorApp;
 
 document.querySelector("#root").append(svg);
+```
+
+Finally, use an if statement in the callback function. This allows us to remove the ternaries.
+
+```js
+document.addEventListener("click", showColor);
+
+function showColor(event) {
+  if (!event.target.dataset.idx) return;
+  let colorId = event.target.dataset.idx;
+  let infoContent = `
+    <h3>Color name: ${colorId}<h3>
+    <h3>Color hex code: ${colorId}<h3>
+    <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
+  document.querySelector(".info").innerHTML = infoContent;
+}
 ```
 
 ---

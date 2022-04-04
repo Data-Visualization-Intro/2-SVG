@@ -45,14 +45,13 @@
     <script>
       document.addEventListener("click", showColor);
 
-      function showColor() {
+      function showColor(event) {
+        if (!event.target.dataset.idx) return;
         let colorId = event.target.dataset.idx;
         let infoContent = `
-        <h3>Color name: ${colorId ? colorNames[colorId] : "nothing"}<h3>
-        <h3>Color hex code: ${colorId ? hexCodes[colorId] : "nothing"}<h3>
-          <div class="colorChip" style="background-color: ${
-            hexCodes[colorId]
-          }"></div>`;
+        <h3>Color name: ${colorId}<h3>
+        <h3>Color hex code: ${colorId}<h3>
+          <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
         document.querySelector(".info").innerHTML = infoContent;
       }
 
@@ -79,12 +78,6 @@
       group.innerHTML = colorApp;
 
       document.querySelector("#root").append(svg);
-
-      //   const colorApp = colorNames
-      //     .map(
-      //       (d, i) => `<div style="background-color: ${hexCodes[i]}}>${d[i]}</div`
-      //     )
-      //     .join("");
     </script>
   </body>
 </html>

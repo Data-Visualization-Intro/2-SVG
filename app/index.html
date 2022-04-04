@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Emoji</title>
 
     <link
       rel="icon"
@@ -14,29 +14,20 @@
 
     <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
 
-    <style></style>
-  </head>
-  <body>
     <style>
-      .icn {
-        width: 72px;
-        height: 72px;
-        background-repeat: no-repeat;
-        margin: 1rem;
+      body {
+        margin: 0;
       }
-      .pizza {
-        background-image: url("../samples/illustrations/exports/SVG/pizza.svg");
+      svg {
+        border: 2px solid gray;
       }
-      .rat {
-        background-image: url("../samples/illustrations/exports/SVG/rat.svg");
-      }
-      .trashcan {
-        background-image: url("../samples/illustrations/exports/SVG/trashcan.svg");
+      svg g + g {
+        display: none;
       }
     </style>
-
-    <div class="icn pizza"></div>
-    <div class="icn rat"></div>
-    <div class="icn trashcan"></div>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="scripts.js"></script>
   </body>
 </html>
