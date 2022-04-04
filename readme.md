@@ -536,7 +536,7 @@ In our case we will to create a portion of a circle in order to create the smile
 
 Note that D3 arc uses [pi](https://en.wikipedia.org/wiki/Pi) - the ratio of a circle's circumference to its diameter.
 
-The circumference of a circle is slightly more than three times as long as its diameter. The exact ratio is called π.
+The circumference of a circle with the radius r is `2πr`.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pi_eq_C_over_d.svg/440px-Pi_eq_C_over_d.svg.png" style="background-color: white; width: 220px;" />
 
