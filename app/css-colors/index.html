@@ -45,7 +45,7 @@
         if (!event.target.dataset.idx) return;
         let colorId = event.target.dataset.idx;
         let infoContent = `
-        <h3>Color name: ${colorId}<h3>
+        <h3>Color name: ${colorNames[colorId]}<h3>
         <h3>Color hex code: ${hexCodes[colorId]}<h3>
           <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
         document.querySelector(".info").innerHTML = infoContent;
