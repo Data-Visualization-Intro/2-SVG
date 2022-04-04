@@ -4,13 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>CSS Colors</title>
 
-    <link
-      rel="icon"
-      href="../samples/illustrations/exports/SVG/rat.svg"
-      type="image/svg+xml"
-    />
+    <link rel="icon" href="rat.svg" type="image/svg+xml" />
 
     <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
     <style>
@@ -40,7 +36,7 @@
       <h3>Select a color</h3>
     </div>
 
-    <script src="../samples/color-codes/data.js"></script>
+    <script src="data.js"></script>
 
     <script>
       document.addEventListener("click", showColor);
@@ -50,7 +46,7 @@
         let colorId = event.target.dataset.idx;
         let infoContent = `
         <h3>Color name: ${colorId}<h3>
-        <h3>Color hex code: ${colorId}<h3>
+        <h3>Color hex code: ${hexCodes[colorId]}<h3>
           <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
         document.querySelector(".info").innerHTML = infoContent;
       }

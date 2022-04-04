@@ -39,7 +39,7 @@ const mySVG = `<svg width=${width} height=${height}>
           <text x="-200" y="200" class="small">x:-200, y:200</text>
           <text x="0" y="120" class="small">foo</text>
           <line x1=${-centerX} x2=${centerX} y1="0" y2="0" stroke="black" stroke-width="2" />
-          <line x1="0" x2="" y1=${-centerY} y2=${centerY} stroke="black" stroke-width="2" />
+          <line x1="0" x2="0" y1=${-centerY} y2=${centerY} stroke="black" stroke-width="2" />
         </g>
         </svg>`;
 

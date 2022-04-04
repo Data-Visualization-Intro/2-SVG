@@ -1,12 +1,17 @@
 # SVG and D3
 
+Today we will be building two pages with SVG:
+
+- a [smiley face emoji](https://dataviz-emoji.netlify.app/)
+- a [hexadecimal color browser](https://dataviz-hex.netlify.app/)
+
+We will continue to work with JavaScript - adding some additional methods to our toolbelt - and will have a brief introduction to a single method from [D3](https://d3js.org).
+
 ## SVG
 
-Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation.
+Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation. - [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
 SVG is to images what illustration is to photography.
-
-[Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
 For all but the simplest illustrations you typically do not code SVG by hand. However it is very important to understand the format as it is a very important tool for data visualization.
 
