@@ -1,5 +1,18 @@
 # SVG and D3
 
+- [SVG and D3](#svg-and-d3)
+  - [SVG](#svg)
+  - [SVG Shapes](#svg-shapes)
+  - [Stacking](#stacking)
+  - [SVG Coordinate Space](#svg-coordinate-space)
+  - [Creating SVG Elements](#creating-svg-elements)
+  - [Exercise 2: Color Wheel](#exercise-2-color-wheel)
+    - [1. Data Aquisition and Cleaning](#1-data-aquisition-and-cleaning)
+    - [2. Formatting the Data](#2-formatting-the-data)
+    - [3. Scripting the UI](#3-scripting-the-ui)
+    - [4. Add an Event Listener](#4-add-an-event-listener)
+  - [Homework](#homework)
+
 Today we will be building two pages with SVG:
 
 - a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
