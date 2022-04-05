@@ -5,7 +5,7 @@ Today we will be building two pages with SVG:
 - a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
 - a [hexadecimal color browser](https://dataviz-exercises.netlify.app/css-colors/index.html)
 
-We will continue to work with JavaScript - adding some additional methods to our toolbelt - and will have a brief introduction to a single method from [D3](https://d3js.org).
+We will continue to work with JavaScript - adding some additional methods to our toolbelt (querySelectorAll, data attributes, spread operators) - and will have a brief introduction to a [D3](https://d3js.org) method.
 
 ## SVG
 
@@ -690,16 +690,19 @@ document.getElementById("root").appendChild(svg);
 
 ## Exercise 2: Color Wheel
 
+### 1. Data Aquisition and Cleaning
+
 Extract the color names and hexidecimal codes from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
 
 ```js
 var keywords = document.querySelectorAll('[style="text-align: center"] code');
 keywords[0];
 keywords[0].innerText;
-let keyArr = [...keywords];
+let keyArr = Array.from(keywords);
+// let keyArr = [...keywords];
 ```
 
-No that we have an Array we use `Array.map()` to create a new Array with the variable name `colors` containing all the color names:
+Now that we have an Array we use `Array.map()` to create a new Array with the variable name `colors` containing all the color names:
 
 `let colors = keyArr.map((key) => key.innerText);`
 
@@ -718,13 +721,39 @@ Note that the colors array is 2 entries longer than the hex array.
 
 Examine and remove the duplicates in the colors array.
 
-Save `index.html` as `colors.html` and remove the SVG.
+Create `data.js` with `colorNames` and `hexCodes` arrays (see for example `/samples/color-codes/data.js`).
 
-Create `data.js` with `colorNames` and `hexCodes` arrays and add it to `index.html`:
+Note: an alternative format for saving this data might be [CSV](https://gist.github.com/DannyBoyNYC/87b5bf8d1fbfe33347b38133578ee4f2) (comma separated values).
+
+### 2. Formatting the Data
+
+Create an new HTML file in `app` called `colors.html` with the following HTML:
 
 ```html
-<script src="../samples/color-codes/data.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hex Color Wheel</title>
+    <style></style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <div class="info">
+      <h3>Select a color</h3>
+    </div>
+
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+    <script src="../samples/color-codes/data.js"></script>
+    <script></script>
+  </body>
+</html>
 ```
+
+Add CSS:
 
 ```css
 body {
@@ -733,9 +762,21 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 g {
-  transform: translate(480px, 480px);
+  transform: translate(50%, 50%);
+}
+.info {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.colorChip {
+  width: 80px;
+  height: 60px;
+  border: 1px solid #333;
 }
 ```
+
+Begin the script block with:
 
 ```js
 let colorApp = "";
@@ -747,12 +788,17 @@ console.log(colorApp);
 document.getElementById("root").innerHTML = colorApp;
 ```
 
+### 3. Scripting the UI
+
 Let's turn this into a pie chart using D3 arcs.
 
 ```js
+const width = 960;
+const height = 960;
+
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", 960);
-svg.setAttribute("height", 960);
+svg.setAttribute("width", width);
+svg.setAttribute("height", height);
 
 const pieArc = d3
   .arc()
@@ -770,8 +816,10 @@ for (let i = 0; i < colorNames.length; i++) {
 svg.innerHTML = colorApp;
 console.log(svg);
 
-document.body.appendChild(svg);
+document.getElementById("root").innerHTML = colorApp;
 ```
+
+Add a group (`<g>`) to center the paths:
 
 ```js
 const width = 960;
@@ -781,8 +829,8 @@ const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 svg.setAttribute("width", width);
 svg.setAttribute("height", height);
 
+// New
 const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
 svg.appendChild(group);
 
 const pieArc = d3.arc().innerRadius(0).outerRadius(960);
@@ -796,11 +844,13 @@ for (let i = 0; i < colorNames.length; i++) {
   })} />`;
 }
 
+// New
 group.innerHTML = colorApp;
-console.log(group);
 
-document.body.appendChild(svg);
+document.getElementById("root").append(svg);
 ```
+
+Set the start angle and end angle in the for loop:
 
 ```js
 for (let i = 0; i < colorNames.length; i++) {
@@ -811,25 +861,24 @@ for (let i = 0; i < colorNames.length; i++) {
 }
 ```
 
-### Event Listener
+Change the outerRadius to 360:
 
-```css
-.info {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-}
-.colorChip {
-  width: 80px;
-  height: 60px;
+`const pieArc = d3.arc().innerRadius(0).outerRadius(360);`
+
+### 4. Add an Event Listener
+
+Add a data attribute to the paths:
+
+```js
+for (let i = 0; i < colorNames.length; i++) {
+  colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
+    startAngle: (i / colorNames.length) * 2 * Math.PI,
+    endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+  })} />`;
 }
 ```
 
-```html
-<div class="info">
-  <h3>Select a color</h3>
-</div>
-```
+Add the event listener and the callback function:
 
 ```js
 document.addEventListener("click", showColor);
@@ -838,18 +887,9 @@ function showColor(event) {
   if (!event.target.dataset.idx) return;
   let colorId = event.target.dataset.idx;
   let infoContent = `
-    <h3>Color name: ${colorId}<h3>
+    <h3>Color name: ${colorNames[colorId]}<h3>
     <h3>Color hex code: ${hexCodes[colorId]}<h3>
     <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
   document.querySelector(".info").innerHTML = infoContent;
-}
-```
-
-```js
-for (let i = 0; i < colorNames.length; i++) {
-  colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
-    startAngle: (i / colorNames.length) * 2 * Math.PI,
-    endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
-  })} />`;
 }
 ```
