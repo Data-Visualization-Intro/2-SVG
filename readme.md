@@ -405,17 +405,23 @@ The SVG equivalent of writing a "Hello World" application is making a smiley fac
 - place in an HTML document:
 
 ```svg
-<svg width="960" height="500">
+<svg
+  width="960"
+  height="500"
+  viewBox="0 0 960 500"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <circle
-    cx="209"
-    cy="209"
-    r="200"
-    fill="#FFE600"
+    cx="480"
+    cy="250"
+    r="240"
+    fill="#FAFF06"
     stroke="black"
-    stroke-width="18"
+    stroke-width="20"
   />
-  <circle cx="136" cy="136" r="32" fill="#black" />
-  <circle cx="264" cy="136" r="32" fill="#black" />
+  <circle cx="405" cy="176" r="30" fill="black" />
+  <circle cx="562" cy="176" r="30" fill="black" />
 </svg>
 ```
 
@@ -454,7 +460,7 @@ const mySVG = `<svg width=${width} height=${height}>
   </g>
 </svg>`;
 
-const rootElement = document.getElementById("root");
+const rootElement = document.querySelector("#root");
 rootElement.innerHTML = mySVG;
 ```
 
@@ -575,7 +581,7 @@ See `samples/d3/index.html` for a glimpse of D3 in action.
 
 In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is diffiult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
 
-(Here's an [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.)
+<!-- (Here's an [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.) -->
 
 Note that D3 arc uses [pi](https://en.wikipedia.org/wiki/Pi) - the ratio of a circle's circumference to its diameter.
 
@@ -692,14 +698,14 @@ const mySVG = `
   `;
 
 svg.innerHTML = mySVG;
-document.getElementById("root").appendChild(svg);
+document.querySelector("#root").appendChild(svg);
 ```
 
 ## Exercise 2: Color Wheel
 
 ### 1. Data Aquisition and Cleaning
 
-Extract the color names and hexidecimal codes from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
+Extract the color names and hexidecimal codes from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color_keywords).
 
 ```js
 var keywords = document.querySelectorAll('[style="text-align: center"] code');
@@ -726,7 +732,7 @@ let hexes = hexArr.map((key) => key.innerText);
 
 Note that the colors array is 2 entries longer than the hex array.
 
-Examine and remove the duplicates in the colors array.
+Examine the web page for clues and remove the duplicates in the colors array.
 
 Create `data.js` with `colorNames` and `hexCodes` arrays (see for example `/samples/color-codes/data.js`).
 
@@ -775,6 +781,9 @@ g {
   position: absolute;
   top: 16px;
   left: 16px;
+  min-width: 200px;
+  min-height: 150px;
+  border: 1px solid #333;
 }
 .colorChip {
   width: 80px;
@@ -810,7 +819,7 @@ svg.setAttribute("height", height);
 const pieArc = d3
   .arc()
   .innerRadius(0)
-  .outerRadius(960)
+  .outerRadius(360)
   .startAngle(Math.PI / 2)
   .endAngle((Math.PI * 3) / 2);
 
@@ -840,7 +849,7 @@ svg.setAttribute("height", height);
 const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
 svg.appendChild(group);
 
-const pieArc = d3.arc().innerRadius(0).outerRadius(960);
+const pieArc = d3.arc().innerRadius(0).outerRadius(360);
 
 let colorApp = "";
 
@@ -857,7 +866,7 @@ group.innerHTML = colorApp;
 document.getElementById("root").append(svg);
 ```
 
-Set the start angle and end angle in the for loop:
+Set the start angle and end angle in the for loop (see d3 [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc) ):
 
 ```js
 for (let i = 0; i < colorNames.length; i++) {
@@ -867,10 +876,6 @@ for (let i = 0; i < colorNames.length; i++) {
   })} />`;
 }
 ```
-
-Change the outerRadius to 360:
-
-`const pieArc = d3.arc().innerRadius(0).outerRadius(360);`
 
 ### 4. Add an Event Listener
 
