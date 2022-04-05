@@ -175,7 +175,9 @@ Positions are measured in pixels from the top left corner, with the positive x d
 
 This is different than the way you're taught to graph in math class (in SVG the y axis is flipped).
 
-<img style="background-color: white; width: 220px; background-color: #fff" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/500px-Cartesian-coordinate-system.svg.png" />
+<div style="background-color: white">
+![Cartesian coordinates](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/500px-Cartesian-coordinate-system.svg.png)
+</div>
 
 It is common to surround the SVG with a `<g>` - an SVG group tag - and then move all the artwork to the center using CSS's transform property.
 
