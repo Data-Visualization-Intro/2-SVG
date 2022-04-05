@@ -5,7 +5,7 @@ Today we will be building two pages with SVG:
 - a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
 - a [hexadecimal color browser](https://dataviz-exercises.netlify.app/css-colors/index.html)
 
-We will continue to work with JavaScript - adding some additional methods to our toolbelt - and will have a brief introduction to a single method from [D3](https://d3js.org).
+We will continue to work with JavaScript - adding some additional methods to our toolbelt (querySelectorAll, data attributes, spread operators) - and will have a brief introduction to a [D3](https://d3js.org) method.
 
 ## SVG
 
@@ -37,7 +37,7 @@ Scaffold a new `index.html` HTML file with Emmet in the `app` folder and add the
 <img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
 ```
 
-The icons here were created and exported from Adobe Illustrator. The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.
+The icons here were created and exported from Adobe Illustrator. (The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.)
 
 2. in CSS
 
@@ -75,7 +75,7 @@ The icons here were created and exported from Adobe Illustrator. The file, `icon
 />
 ```
 
-4. or [loaders](https://loaders.holasvg.com) and [animation](https://www.svgator.com).
+4. or [loaders](https://loaders.holasvg.com) with [animation](https://www.svgator.com).
 
 ## SVG Shapes
 
@@ -113,7 +113,9 @@ We've already looked at one simple SVG element.
 </svg>
 ```
 
-Note the default size of the SVG element in the HTML document - 300px x 150px. The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
+Note the default size of the SVG element in the HTML document - 300px x 150px.
+
+The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
 
 To create a 200px x 200px circle we define a radius of 100.
 
@@ -129,7 +131,7 @@ To match the size and position of the first CSS circle we need to provide both a
 
 ## Stacking
 
-Unlike HTML elements such as our circles, SVG elements do not follow any default layout flow. The order of the SVG elements in the code will determine the stacking order of the ultimate display.
+Unlike HTML elements such as our circles, SVG elements do not follow any default layout flow. The order of the SVG elements in the code determines the stacking order of the ultimate display.
 
 ```svg
 <svg width="640" height="220" style="border: 1px solid">
@@ -163,7 +165,9 @@ Add a new shape:
 />
 ```
 
-Again, the the top left corner is the 0,0 point for the rectangle. Note how the 12px stroke is partially cut off on the top left.
+Again, the the top left corner is the 0,0 point.
+
+Note how the 12px stroke is partially cut off on the top left.
 
 Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom.
 
@@ -187,7 +191,7 @@ Remove the CSS shapes and add:
 
 We can now use `cx="0"` to center the circle. The positioning system becomes more intuitive and easier to work with.
 
-For example:
+<!-- For example:
 
 ```css
 <style>
@@ -215,13 +219,13 @@ For example:
      />
    </g>
 </svg>
-```
+``` -->
 
 The CSS [transform property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) is important as it is animatable and allows us to work in 3D, rotate elements and much more.
 
-Try:
+<!-- Try:
 
-`transform: translate(50%, 50%) rotate(60deg) skew(30deg, 20deg);`
+`transform: translate(50%, 50%) rotate(60deg) skew(30deg, 20deg);` -->
 
 ## Additional SVG Elements and Properties
 
@@ -238,7 +242,7 @@ Some additional SVG shapes:
         height="300"
         stroke="black"
         fill="steelblue"
-        stroke-width="5"
+        stroke-width="3"
       />
     </svg>
 
@@ -295,9 +299,9 @@ Some additional SVG shapes:
 
 ## Paths
 
-A `<path>` is the most general and commonly used shape in SVG.
+A `<path>` is the most general and most commonly used shape in SVG.
 
-Path elements can draw rectangles (with or without rounded corners), circles, ellipses, polylines, and polygons - basically any of the other types of shapes. For that reason people who implement SVG tend to focus on them.
+Path elements can draw rectangles, round corners, circles, ellipses, polylines, and polygons - any of the other shapes. For that reason people who implement and work with SVG tend to focus on them.
 
 While creating complex paths using a text editor is definitely not recommended, understanding how they work is important and will allow you to identify and repair display issues in SVGs.
 
@@ -310,7 +314,6 @@ The shape of a `<path>` element is defined by one parameter: `d` along with mult
 ```
 
 - The "Move to" command is called with the letter M: `M 10 10`
-- An uppercase letter specifies absolute coordinates on the page, and a lowercase letter specifies relative coordinates
 - "Line To" - `L` - takes two parameters — x and y coordinates — and draws a line from the current position to a new position
 - `H` draws a horizontal line, and `V` draws a vertical line:
 - "Close Path" is called with `Z` and draws a straight line from the current position back to the first point of the path
@@ -318,6 +321,8 @@ The shape of a `<path>` element is defined by one parameter: `d` along with mult
 ```svg
 <path d="M 10 10 H 90 V 90 H 10 Z" fill="transparent" stroke="black"/>
 ```
+
+An uppercase letter specifies absolute coordinates and a lowercase letter specifies relative coordinates.
 
 Here's the same shape drawn using relative paths, note the numeric differences:
 
@@ -566,6 +571,8 @@ D3 is a huge collection of functionality that we will use to _efficiently_ creat
 
 One place to access documentation is on the project's [Github page](https://github.com/d3/d3/blob/main/API.md).
 
+See `samples/d3/index.html` for a glimpse of D3 in action.
+
 In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is diffiult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
 
 (Here's an [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.)
@@ -690,16 +697,19 @@ document.getElementById("root").appendChild(svg);
 
 ## Exercise 2: Color Wheel
 
+### 1. Data Aquisition and Cleaning
+
 Extract the color names and hexidecimal codes from [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
 
 ```js
 var keywords = document.querySelectorAll('[style="text-align: center"] code');
 keywords[0];
 keywords[0].innerText;
-let keyArr = [...keywords];
+let keyArr = Array.from(keywords);
+// let keyArr = [...keywords];
 ```
 
-No that we have an Array we use `Array.map()` to create a new Array with the variable name `colors` containing all the color names:
+Now that we have an Array we use `Array.map()` to create a new Array with the variable name `colors` containing all the color names:
 
 `let colors = keyArr.map((key) => key.innerText);`
 
@@ -718,13 +728,39 @@ Note that the colors array is 2 entries longer than the hex array.
 
 Examine and remove the duplicates in the colors array.
 
-Save `index.html` as `colors.html` and remove the SVG.
+Create `data.js` with `colorNames` and `hexCodes` arrays (see for example `/samples/color-codes/data.js`).
 
-Create `data.js` with `colorNames` and `hexCodes` arrays and add it to `index.html`:
+Note: an alternative format for saving this data might be [CSV](https://gist.github.com/DannyBoyNYC/87b5bf8d1fbfe33347b38133578ee4f2) (comma separated values).
+
+### 2. Formatting the Data
+
+Create an new HTML file in `app` called `colors.html` with the following HTML:
 
 ```html
-<script src="../samples/color-codes/data.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hex Color Wheel</title>
+    <style></style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <div class="info">
+      <h3>Select a color</h3>
+    </div>
+
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+    <script src="../samples/color-codes/data.js"></script>
+    <script></script>
+  </body>
+</html>
 ```
+
+Add CSS:
 
 ```css
 body {
@@ -733,9 +769,21 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 g {
-  transform: translate(480px, 480px);
+  transform: translate(50%, 50%);
+}
+.info {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.colorChip {
+  width: 80px;
+  height: 60px;
+  border: 1px solid #333;
 }
 ```
+
+Begin the script block with:
 
 ```js
 let colorApp = "";
@@ -747,12 +795,17 @@ console.log(colorApp);
 document.getElementById("root").innerHTML = colorApp;
 ```
 
+### 3. Scripting the UI
+
 Let's turn this into a pie chart using D3 arcs.
 
 ```js
+const width = 960;
+const height = 960;
+
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", 960);
-svg.setAttribute("height", 960);
+svg.setAttribute("width", width);
+svg.setAttribute("height", height);
 
 const pieArc = d3
   .arc()
@@ -770,8 +823,10 @@ for (let i = 0; i < colorNames.length; i++) {
 svg.innerHTML = colorApp;
 console.log(svg);
 
-document.body.appendChild(svg);
+document.getElementById("root").innerHTML = colorApp;
 ```
+
+Add a group (`<g>`) to center the paths:
 
 ```js
 const width = 960;
@@ -781,8 +836,8 @@ const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 svg.setAttribute("width", width);
 svg.setAttribute("height", height);
 
+// New
 const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
 svg.appendChild(group);
 
 const pieArc = d3.arc().innerRadius(0).outerRadius(960);
@@ -796,11 +851,13 @@ for (let i = 0; i < colorNames.length; i++) {
   })} />`;
 }
 
+// New
 group.innerHTML = colorApp;
-console.log(group);
 
-document.body.appendChild(svg);
+document.getElementById("root").append(svg);
 ```
+
+Set the start angle and end angle in the for loop:
 
 ```js
 for (let i = 0; i < colorNames.length; i++) {
@@ -811,39 +868,13 @@ for (let i = 0; i < colorNames.length; i++) {
 }
 ```
 
-### Event Listener
+Change the outerRadius to 360:
 
-```css
-.info {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-}
-.colorChip {
-  width: 80px;
-  height: 60px;
-}
-```
+`const pieArc = d3.arc().innerRadius(0).outerRadius(360);`
 
-```html
-<div class="info">
-  <h3>Select a color</h3>
-</div>
-```
+### 4. Add an Event Listener
 
-```js
-document.addEventListener("click", showColor);
-
-function showColor(event) {
-  if (!event.target.dataset.idx) return;
-  let colorId = event.target.dataset.idx;
-  let infoContent = `
-    <h3>Color name: ${colorId}<h3>
-    <h3>Color hex code: ${hexCodes[colorId]}<h3>
-    <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
-  document.querySelector(".info").innerHTML = infoContent;
-}
-```
+Add a data attribute to the paths:
 
 ```js
 for (let i = 0; i < colorNames.length; i++) {
@@ -853,3 +884,24 @@ for (let i = 0; i < colorNames.length; i++) {
   })} />`;
 }
 ```
+
+Add the event listener and the callback function:
+
+```js
+document.addEventListener("click", showColor);
+
+function showColor(event) {
+  if (!event.target.dataset.idx) return;
+  let colorId = event.target.dataset.idx;
+  let infoContent = `
+    <h3>Color name: ${colorNames[colorId]}<h3>
+    <h3>Color hex code: ${hexCodes[colorId]}<h3>
+    <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
+  document.querySelector(".info").innerHTML = infoContent;
+}
+```
+
+## Homework
+
+1. Customize your emoji to give it personality
+2. Use Figma to sketch out a better visualization for the color wheel
