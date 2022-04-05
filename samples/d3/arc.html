@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3 DOM Manipulation</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <script>
+      d3.select("body").append("h2").text("d3.arc()");
+
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .append("g")
+        .attr("transform", "translate(150,50)");
+
+      var arc = d3
+        .arc()
+        .innerRadius(40)
+        .outerRadius(45)
+        .startAngle(10)
+        .endAngle(8);
+
+      svg
+        .append("path")
+        .attr("class", "arc")
+        .attr("d", arc)
+        .attr("fill", "green");
+    </script>
+  </body>
+</html>

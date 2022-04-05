@@ -37,7 +37,7 @@ Scaffold a new `index.html` HTML file with Emmet in the `app` folder and add the
 <img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
 ```
 
-The icons here were created and exported from Adobe Illustrator. The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.
+The icons here were created and exported from Adobe Illustrator. (The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.)
 
 2. in CSS
 
@@ -75,7 +75,7 @@ The icons here were created and exported from Adobe Illustrator. The file, `icon
 />
 ```
 
-4. or [loaders](https://loaders.holasvg.com) and [animation](https://www.svgator.com).
+4. or [loaders](https://loaders.holasvg.com) with [animation](https://www.svgator.com).
 
 ## SVG Shapes
 
@@ -113,7 +113,9 @@ We've already looked at one simple SVG element.
 </svg>
 ```
 
-Note the default size of the SVG element in the HTML document - 300px x 150px. The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
+Note the default size of the SVG element in the HTML document - 300px x 150px.
+
+The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
 
 To create a 200px x 200px circle we define a radius of 100.
 
@@ -129,7 +131,7 @@ To match the size and position of the first CSS circle we need to provide both a
 
 ## Stacking
 
-Unlike HTML elements such as our circles, SVG elements do not follow any default layout flow. The order of the SVG elements in the code will determine the stacking order of the ultimate display.
+Unlike HTML elements such as our circles, SVG elements do not follow any default layout flow. The order of the SVG elements in the code determines the stacking order of the ultimate display.
 
 ```svg
 <svg width="640" height="220" style="border: 1px solid">
@@ -163,7 +165,9 @@ Add a new shape:
 />
 ```
 
-Again, the the top left corner is the 0,0 point for the rectangle. Note how the 12px stroke is partially cut off on the top left.
+Again, the the top left corner is the 0,0 point.
+
+Note how the 12px stroke is partially cut off on the top left.
 
 Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom.
 
@@ -187,7 +191,7 @@ Remove the CSS shapes and add:
 
 We can now use `cx="0"` to center the circle. The positioning system becomes more intuitive and easier to work with.
 
-For example:
+<!-- For example:
 
 ```css
 <style>
@@ -215,13 +219,13 @@ For example:
      />
    </g>
 </svg>
-```
+``` -->
 
 The CSS [transform property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) is important as it is animatable and allows us to work in 3D, rotate elements and much more.
 
-Try:
+<!-- Try:
 
-`transform: translate(50%, 50%) rotate(60deg) skew(30deg, 20deg);`
+`transform: translate(50%, 50%) rotate(60deg) skew(30deg, 20deg);` -->
 
 ## Additional SVG Elements and Properties
 
@@ -238,7 +242,7 @@ Some additional SVG shapes:
         height="300"
         stroke="black"
         fill="steelblue"
-        stroke-width="5"
+        stroke-width="3"
       />
     </svg>
 
@@ -295,9 +299,9 @@ Some additional SVG shapes:
 
 ## Paths
 
-A `<path>` is the most general and commonly used shape in SVG.
+A `<path>` is the most general and most commonly used shape in SVG.
 
-Path elements can draw rectangles (with or without rounded corners), circles, ellipses, polylines, and polygons - basically any of the other types of shapes. For that reason people who implement SVG tend to focus on them.
+Path elements can draw rectangles, round corners, circles, ellipses, polylines, and polygons - any of the other shapes. For that reason people who implement and work with SVG tend to focus on them.
 
 While creating complex paths using a text editor is definitely not recommended, understanding how they work is important and will allow you to identify and repair display issues in SVGs.
 
@@ -310,7 +314,6 @@ The shape of a `<path>` element is defined by one parameter: `d` along with mult
 ```
 
 - The "Move to" command is called with the letter M: `M 10 10`
-- An uppercase letter specifies absolute coordinates on the page, and a lowercase letter specifies relative coordinates
 - "Line To" - `L` - takes two parameters — x and y coordinates — and draws a line from the current position to a new position
 - `H` draws a horizontal line, and `V` draws a vertical line:
 - "Close Path" is called with `Z` and draws a straight line from the current position back to the first point of the path
@@ -318,6 +321,8 @@ The shape of a `<path>` element is defined by one parameter: `d` along with mult
 ```svg
 <path d="M 10 10 H 90 V 90 H 10 Z" fill="transparent" stroke="black"/>
 ```
+
+An uppercase letter specifies absolute coordinates and a lowercase letter specifies relative coordinates.
 
 Here's the same shape drawn using relative paths, note the numeric differences:
 
@@ -565,6 +570,8 @@ And use the browser's console to log out the D3 object.
 D3 is a huge collection of functionality that we will use to _efficiently_ create data visualizations.
 
 One place to access documentation is on the project's [Github page](https://github.com/d3/d3/blob/main/API.md).
+
+See `samples/d3/index.html` for a glimpse of D3 in action.
 
 In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is diffiult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
 
@@ -893,3 +900,8 @@ function showColor(event) {
   document.querySelector(".info").innerHTML = infoContent;
 }
 ```
+
+## Homework
+
+1. Customize your emoji to give it personality
+2. Use Figma to sketch out a better visualization for the color wheel
