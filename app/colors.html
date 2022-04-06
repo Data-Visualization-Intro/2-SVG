@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hex Color Wheel</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      g {
+        transform: translate(50%, 50%);
+      }
+      .info {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        /* min-width: 200px;
+        min-height: 150px; */
+        /* border: 1px solid #333; */
+      }
+      .colorChip {
+        width: 80px;
+        height: 60px;
+        border: 1px solid #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <div class="info">
+      <h3>Select a color</h3>
+    </div>
+
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+    <script src="data-two.js"></script>
+    <script>
+      const width = 960;
+      const height = 960;
+
+      const pieArc = d3.arc().innerRadius(0).outerRadius(360);
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", width);
+      svg.setAttribute("height", height);
+
+      // New
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      svg.appendChild(group);
+
+      let colorApp = "";
+
+      for (let i = 0; i < colorNames.length; i++) {
+        colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
+          startAngle: (i / colorNames.length) * 2 * Math.PI,
+          endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+        })} />`;
+      }
+
+      group.innerHTML = colorApp;
+      document.getElementById("root").appendChild(svg);
+
+      document.addEventListener("click", showColor);
+
+      function showColor(event) {
+        if (!event.target.dataset.idx) return;
+        let colorId = event.target.dataset.idx;
+        let infoContent = `
+            <h3>Color name: ${colorNames[colorId]}<h3>
+            <h3>Color hex code: ${hexCodes[colorId]}<h3>
+            <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
+        document.querySelector(".info").innerHTML = infoContent;
+      }
+    </script>
+  </body>
+</html>

@@ -4,7 +4,85 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Smile!</title>
+
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+
+    <link
+      rel="icon"
+      href="../samples/illustrations/exports/SVG/pizza.svg"
+      type="image/svg+xml"
+    />
+
+    <style>
+      body {
+        margin: 0;
+      }
+      svg {
+        /* border: 2px solid gray; */
+      }
+      svg g + g {
+        display: none;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div id="root"></div>
+
+    <script>
+      const width = 960;
+      const height = 500;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const strokeWidth = 20;
+      const eyeOffsetX = 90;
+      const eyeOffsetY = 70;
+      const eyeRadius = 30;
+      const mouthWidth = 100;
+      const mouthRadius = 20;
+
+      const text = {
+        x: 200,
+        y: -200,
+      };
+
+      const mouthArc = d3
+        .arc()
+        .innerRadius(mouthWidth)
+        .outerRadius(mouthWidth + mouthRadius)
+        .startAngle(Math.PI / 2 + 0.2)
+        .endAngle((Math.PI * 3) / 2 - 0.2);
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", width);
+      svg.setAttribute("height", height);
+
+      const mySVG = `
+        <g transform=${`translate(${centerX},${centerY})`}>
+            <circle
+                r=${centerY - strokeWidth / 2}
+                fill="#FAFF06"
+                stroke="black"
+                stroke-width=${strokeWidth}
+            />
+            <circle cx=${-eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
+            <circle cx=${eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
+
+            <path d=${mouthArc()} />
+
+        </g>
+
+
+        <g transform=${`translate(${centerX},${centerY})`}>
+            <circle cx="0" cy="0" r="4" />
+            <line x1=${-centerX} x2=${centerX} y1="0" y2="0" stroke="black" stroke-width="2" />
+            <line x1="0" x2="0" y1=${-centerY} y2=${centerY} stroke="black" stroke-width="2" />
+            <text x=${text.x} y=${text.y}>.${text.x} ${text.y} point</text>
+        </g>
+        `;
+
+      svg.innerHTML = mySVG;
+      document.querySelector("#root").appendChild(svg);
+    </script>
+  </body>
 </html>
