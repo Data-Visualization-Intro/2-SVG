@@ -1,13 +1,14 @@
-async function drawLineChart() {
-  const dataset = await d3.json("./data/my_weather_data.json");
-  // console.table(dataset[0]);
-  const yAccessor = function (data) {
-    // console.log("dee", data);
-    return data.temperatureMax;
-  };
+async function getResponse(path) {
+  const response = await fetch(path);
+  const data = await response.json();
+  return data;
+}
 
+getResponse("./data/my_weather_data.json").then((data) => drawLineChart(data));
+
+function drawLineChart(dataset) {
+  const yAccessor = (d) => d.temperatureMax;
   const dateParser = d3.timeParse("%Y-%m-%d");
-
   const xAccessor = (d) => dateParser(d.date);
 
   let dimensions = {
@@ -19,6 +20,10 @@ async function drawLineChart() {
       bottom: 40,
       left: 60,
     },
+    text: {
+      x: 100,
+      y: 100,
+    },
   };
 
   dimensions.boundedWidth =
@@ -26,7 +31,15 @@ async function drawLineChart() {
   dimensions.boundedHeight =
     dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
 
-  console.log("dimensions", dimensions);
+  if (!window.dimensions) {
+    window.dimensions = dimensions;
+  }
+
+  //   const wrapper = d3.select("#wrapper");
+  //   const svg = wrapper.append("svg");
+  //   svg.attr("width", dimensions.width);
+  //   svg.attr("height", dimensions.height);
+  //   console.log(svg);
 
   const wrapper = d3
     .select("#wrapper")
@@ -46,23 +59,27 @@ async function drawLineChart() {
     .domain(d3.extent(dataset, yAccessor))
     .range([dimensions.boundedHeight, 0]);
 
-  const xScale = d3
-    .scaleTime()
-    .domain(d3.extent(dataset, xAccessor))
-    .range([0, dimensions.boundedWidth]);
-
-  // bounds.append("path").attr("d", "M 0 0 L 100 0 L 100 100 L 0 50 Z");
-
   const freezingTemperaturePlacement = yScale(32);
+
   const freezingTemperatures = bounds
     .append("rect")
     .attr("x", 0)
     .attr("width", dimensions.boundedWidth)
     .attr("y", freezingTemperaturePlacement)
     .attr("height", dimensions.boundedHeight - freezingTemperaturePlacement)
-    .attr("fill", "#e0f3f3");
+    .attr("fill", "#87ceeb")
+    .attr("opacity", "0.5");
 
-  // 5. Draw data
+  const xScale = d3
+    .scaleTime()
+    .domain(d3.extent(dataset, xAccessor))
+    .range([0, dimensions.boundedWidth]);
+
+  //   const textEl = wrapper
+  //     .append("text")
+  //     .text(`.x:${dimensions.text.x}/y:${dimensions.text.y}`)
+  //     .attr("x", dimensions.text.x)
+  //     .attr("y", dimensions.text.y);
 
   const lineGenerator = d3
     .line()
@@ -73,17 +90,22 @@ async function drawLineChart() {
     .append("path")
     .attr("d", lineGenerator(dataset))
     .attr("fill", "none")
-    .attr("stroke", "#af9358")
-    .attr("stroke-width", 2);
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 1);
 
   const yAxisGenerator = d3.axisLeft().scale(yScale);
-  const yAxis = bounds.append("g").call(yAxisGenerator);
+
+  const yAxis = bounds
+    .append("g")
+    .call(yAxisGenerator)
+    .style("color", "#666666");
+
+  yAxisGenerator(yAxis);
 
   const xAxisGenerator = d3.axisBottom().scale(xScale);
   const xAxis = bounds
     .append("g")
     .call(xAxisGenerator)
-    .style("transform", `translateY(${dimensions.boundedHeight}px)`);
+    .style("transform", `translateY(${dimensions.boundedHeight}px)`)
+    .style("color", "#666666");
 }
-
-drawLineChart();
