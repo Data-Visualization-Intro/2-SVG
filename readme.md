@@ -24,11 +24,9 @@ We will continue to work with JavaScript - adding some additional methods to our
 
 Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation. - [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
-SVG is to images what illustration is to photography.
+SVG is to images what illustration is to photography. SVG is widely used in web development as an image format.
 
 For all but the simplest illustrations you typically do not code SVG by hand. However it is very important to understand the format as it is central to data visualization.
-
-SVG is widely used in web development as an image format.
 
 For an exhaustive set of articles about using SVG in development see [CSS Tricks](https://css-tricks.com/tag/svg/).
 
