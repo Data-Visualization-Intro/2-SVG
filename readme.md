@@ -42,7 +42,9 @@ Scaffold a new `index.html` HTML file with Emmet in the `app` folder and add the
     width: 100px;
   }
 </style>
+```
 
+```html
 <img src="../samples/illustrations/exports/SVG/pizza.svg" alt="" />
 <img src="../samples/illustrations/exports/SVG/rat.svg" alt="" />
 <img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
@@ -50,7 +52,7 @@ Scaffold a new `index.html` HTML file with Emmet in the `app` folder and add the
 
 The icons here were created and exported from Adobe Illustrator. (The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.)
 
-2. in CSS
+2. these images can be inserted into the document via CSS:
 
 ```html
 <style>
@@ -124,7 +126,15 @@ We've already looked at one simple SVG element.
 </svg>
 ```
 
-Note the default size of the SVG element in the HTML document - 300px x 150px.
+Note: the default size of the SVG element in the HTML document - 300px x 150px. Let's over-ride that with CSS.
+
+```css
+svg {
+  width: 640px;
+  height: 480px;
+  border: 1px solid;
+}
+```
 
 The center point of the circle is located at the upper left hand corner of the `svg` element. Anything falling outside the SVG container is clipped.
 
@@ -135,7 +145,7 @@ To create a 200px x 200px circle we define a radius of 100.
 To match the size and position of the first CSS circle we need to provide both a radius and define the x and y axis (as well as increase the overall size of the svg canvas):
 
 ```svg
-<svg width="640" height="480" style="border: 1px solid">
+<svg>
     <circle cx="100" cy="100" r="100" fill="green" />
 </svg>
 ```
@@ -145,7 +155,7 @@ To match the size and position of the first CSS circle we need to provide both a
 Unlike HTML elements such as our circles, SVG elements do not follow any default layout flow. The order of the SVG elements in the code determines the stacking order of the ultimate display.
 
 ```svg
-<svg width="640" height="220" style="border: 1px solid">
+<svg>
     <circle cx="100" cy="100" r="100" fill="green" />
     <circle cx="100" cy="100" r="70" fill="red" />
 </svg>
@@ -154,7 +164,7 @@ Unlike HTML elements such as our circles, SVG elements do not follow any default
 In order to match the layout of the HTML/CSS circles we need to explicitly define x and y positioning for each circle:
 
 ```svg
-<svg width="640" height="220" style="border: 1px solid">
+<svg>
     <circle cx="100" cy="100" r="100" fill="green" />
     <circle cx="270" cy="100" r="70" fill="green" />
 </svg>
@@ -180,7 +190,7 @@ Again, the the top left corner is the 0,0 point.
 
 Note how the 12px stroke is partially cut off on the top left.
 
-Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom.
+_Positions are measured in pixels from the top left corner, with the positive x direction being to the right, and the positive y direction towards the bottom._
 
 ![grid](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Positions/canvas_default_grid.png)
 
@@ -200,7 +210,7 @@ Remove the CSS shapes and add:
 </svg>
 ```
 
-We can now use `cx="0"` to center the circle. The positioning system becomes more intuitive and easier to work with.
+By using the CSS transform property to center the group we can now use `cx="0"` to center the circle. The positioning system becomes more intuitive and easier to work with.
 
 <!-- For example:
 
@@ -232,7 +242,7 @@ We can now use `cx="0"` to center the circle. The positioning system becomes mor
 </svg>
 ``` -->
 
-The CSS [transform property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) is important as it is animatable and allows us to work in 3D, rotate elements and much more.
+The CSS [transform property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) is animatable and allows us to work in 3D, rotate elements and much more.
 
 <!-- Try:
 
@@ -240,77 +250,77 @@ The CSS [transform property](https://developer.mozilla.org/en-US/docs/Web/CSS/tr
 
 ## Additional SVG Elements and Properties
 
-Some additional SVG shapes:
+Some additional SVG shapes and attributes:
 
 ```svg
-    <svg width="640" height="480">
-      <rect
-        x="60"
-        y="10"
-        rx="10"
-        ry="10"
-        width="200"
-        height="300"
-        stroke="black"
-        fill="steelblue"
-        stroke-width="3"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <rect
+     x="60"
+     y="10"
+     rx="10"
+     ry="10"
+     width="200"
+     height="300"
+     stroke="black"
+     fill="steelblue"
+     stroke-width="3"
+   />
+ </svg>
 
-    <svg width="640" height="480">
-      <ellipse
-        cx="150"
-        cy="150"
-        rx="120"
-        ry="85"
-        stroke="black"
-        fill="steelblue"
-        stroke-width="12"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <ellipse
+     cx="150"
+     cy="150"
+     rx="120"
+     ry="85"
+     stroke="black"
+     fill="steelblue"
+     stroke-width="12"
+   />
+ </svg>
 
-    <svg width="640" height="480">
-      <line
-        x1="10"
-        x2="250"
-        y1="110"
-        y2="350"
-        stroke="orange"
-        stroke-width="5"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <line
+     x1="10"
+     x2="250"
+     y1="110"
+     y2="350"
+     stroke="orange"
+     stroke-width="5"
+   />
+ </svg>
 
-    <svg width="640" height="480">
-      <polyline
-        points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
-        stroke="orange"
-        fill="transparent"
-        stroke-width="3"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <polyline
+     points="60 110 65 120 70 115 75 130 80 125 85 140 90 135 95 150 100 145"
+     stroke="orange"
+     fill="transparent"
+     stroke-width="3"
+   />
+ </svg>
 
-    <svg width="640" height="480">
-      <polygon
-        points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180"
-        stroke="green"
-        fill="transparent"
-        stroke-width="3"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <polygon
+     points="50 160 55 180 70 180 60 190 65 205 50 195 35 205 40 190 30 180 45 180"
+     stroke="green"
+     fill="transparent"
+     stroke-width="3"
+   />
+ </svg>
 
-    <svg width="640" height="480">
-      <path
-        d="M20,230 Q40,205 50,230 T90,230"
-        fill="none"
-        stroke="blue"
-        stroke-width="5"
-      />
-    </svg>
+ <svg width="640" height="480">
+   <path
+     d="M20,230 Q40,205 50,230 T90,230"
+     fill="none"
+     stroke="blue"
+     stroke-width="5"
+   />
+ </svg>
 ```
 
 ## Paths
 
-A `<path>` is the most general and most commonly used shape in SVG.
+A `<path>` is the most versatile and commonly used shape in SVG.
 
 Path elements can draw rectangles, round corners, circles, ellipses, polylines, and polygons - any of the other shapes. For that reason people who implement and work with SVG tend to focus on them.
 
@@ -319,7 +329,7 @@ While creating complex paths using a text editor is definitely not recommended, 
 The shape of a `<path>` element is defined by one parameter: `d` along with multiple "commands."
 
 ```svg
-<svg width="640" height="480">
+<svg>
   <path d="M 10 10 H 90 V 90 H 10 L 10 10" />
 </svg>
 ```
@@ -369,7 +379,7 @@ The other type of Bézier curve uses `Q`:
 
 ### Arcs
 
-Arcs are sections of circles or ellipses and use an `A`. They create pieces of circles or ellipses in drawings. For instance, a pie chart requires a different arc for each piece.
+Arcs are sections of circles or ellipses and use an `A` for arc. They create pieces of circles or ellipses in drawings. For instance, a pie chart requires a different arc for each piece.
 
 ![arcs](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths/svgarcs_xaxisrotation_with_grid.png)
 
@@ -382,7 +392,7 @@ Arcs are sections of circles or ellipses and use an `A`. They create pieces of c
          L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
 ```
 
-### Linecaps
+<!-- ### Linecaps
 
 ```svg
 <line x1="40" x2="120" y1="20" y2="20" stroke="black" stroke-width="20" stroke-linecap="butt"/>
@@ -398,11 +408,13 @@ Arcs are sections of circles or ellipses and use an `A`. They create pieces of c
 
 <path d="M 10 75 L 190 75" stroke="red"
   stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
-```
+``` -->
 
 ### Gradients and Animation
 
-Examine the gradient-animation directory in the samples folder.
+Examine `animation.html` in the gradient-animation directory in the samples folder.
+
+Note the use of `<defs>` to define the gradients and `fill="url(#land1-gradient)"` to apply them to the circle. Also note the animation tag.
 
 ## Smile
 
