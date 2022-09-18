@@ -1,22 +1,23 @@
-# SVG and D3
+# SVG for Data Visualization
 
-- [SVG and D3](#svg-and-d3)
+- [SVG for Data Visualization](#svg-for-data-visualization)
+  - [Exercise](#exercise)
   - [SVG](#svg)
   - [SVG Shapes](#svg-shapes)
   - [Stacking](#stacking)
   - [SVG Coordinate Space](#svg-coordinate-space)
   - [Creating SVG Elements](#creating-svg-elements)
-  - [Exercise 2: Color Wheel](#exercise-2-color-wheel)
+  - [Notes](#notes)
+  - [Homework](#homework)
+  - [Exercise: Color Wheel](#exercise-color-wheel)
     - [1. Data Aquisition and Cleaning](#1-data-aquisition-and-cleaning)
     - [2. Formatting the Data](#2-formatting-the-data)
     - [3. Scripting the UI](#3-scripting-the-ui)
     - [4. Add an Event Listener](#4-add-an-event-listener)
-  - [Homework](#homework)
 
-Today we will be building two pages with SVG:
+## Exercise
 
-- a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
-- a [hexadecimal color browser](https://dataviz-exercises.netlify.app/css-colors/index.html)
+Today we will be building a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
 
 We will continue to work with JavaScript - adding some additional methods to our toolbelt (querySelectorAll, data attributes, spread operators) - and will have a brief introduction to a [D3](https://d3js.org) method.
 
@@ -558,7 +559,7 @@ const rootElement = document.getElementById("root");
 rootElement.innerHTML = mySVG;
 ```
 
-## D3
+## Use D3 to Create the Mouth
 
 Create a smile shape in Figma, export it as SVG and add it to the face. e.g.:
 
@@ -614,13 +615,17 @@ The circumference of a circle with the radius r is `2πr`.
 
 To create an arc we use the D3 method and call it for the path's `d` parameter.
 
+The D3 [arc method](https://www.d3indepth.com/shapes/#arc-generator) requires `innerRadius`, `outerRadius`, `startAngle`, and `endAngle` as parameters.
+
+Here's how we can start using it:
+
 ```js
 const mouthArc = d3
   .arc()
   .innerRadius(100)
   .outerRadius(120)
-  .startAngle(Math.PI / 2)
-  .endAngle((Math.PI * 3) / 2);
+  .startAngle(2)
+  .endAngle(4.25);
 
 const mySVG = `<svg width=${width} height=${height}>
   <g transform=${`translate(${centerX},${centerY})`}>
@@ -636,6 +641,15 @@ const mySVG = `<svg width=${width} height=${height}>
       <path d=${mouthArc()} />
   </g>
   </svg>`;
+```
+
+`startAngle` and `endAngle` are measured clockwise from the 12 o’clock in [radians](https://en.wikipedia.org/wiki/Radian).
+
+Use division on Pi to manipulate the smile:
+
+```js
+  .startAngle(Math.PI / 2)
+  .endAngle((Math.PI * 3) / 2);
 ```
 
 Use formulae to calculate the radius.
@@ -676,6 +690,12 @@ const mySVG = `<svg width=${width} height=${height}>
 
 const rootElement = document.getElementById("root");
 rootElement.innerHTML = mySVG;
+```
+
+You can soften the angles by adding a `cornerRadius` parameter.
+
+```js
+.cornerRadius(8)
 ```
 
 ## Creating SVG Elements
@@ -724,7 +744,128 @@ svg.innerHTML = mySVG;
 document.querySelector("#root").appendChild(svg);
 ```
 
-## Exercise 2: Color Wheel
+## Notes
+
+[Chart.js](https://www.chartjs.org/) is a popular library for creating charts. Unlike Highcharts, it's not a commercial product. It's open source and free to use.
+
+If you look at the [documentation](https://www.chartjs.org/docs/latest/) you'll notice that installation can be accomplished in three ways.
+
+THe third method - a CDN - is the one we used previously with Highcharts. Here is a sample:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      const labels = ["January", "February", "March", "April", "May", "June"];
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "My First dataset",
+            backgroundColor: "rgb(255, 99, 132)",
+            borderColor: "rgb(255, 99, 132)",
+            data: [0, 10, 5, 2, 20, 30, 45],
+          },
+        ],
+      };
+
+      const config = {
+        type: "line",
+        data: data,
+        options: {},
+      };
+
+      const myChart = new Chart(document.getElementById("myChart"), config);
+    </script>
+  </body>
+</html>
+```
+
+And another example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [
+            {
+              label: "# of Votes",
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+## Homework
+
+1. Customize your smiley emoji to give it personality, embed it in a webpage and use it as an icon (a favicon that appears in the browser tab) on that page
+2. Last class you were asked to think of a simple dataset and then choose a chart type from Highcharts to visualize it. Now, we reverse the order of operations. I provide a chart type and you must come up with a dataset that is suitable for it. Create a [Polar Area Chart](https://www.chartjs.org/docs/latest/charts/polar.html) using Chart.js to visualize a new dataset of your own choosing/devise.
+
+You can use the [Chart.js documentation](https://www.chartjs.org/docs/latest/) to help you. You can also use the [Chart.js samples](https://www.chartjs.org/samples/latest/) to help you.
+
+## Exercise: Color Wheel
+
+- a [hexadecimal color browser](https://dataviz-exercises.netlify.app/css-colors/index.html)
 
 ### 1. Data Aquisition and Cleaning
 
@@ -928,8 +1069,3 @@ function showColor(event) {
   document.querySelector(".info").innerHTML = infoContent;
 }
 ```
-
-## Homework
-
-1. Customize your emoji to give it personality
-2. Use Figma to sketch out a better visualization for the color wheel
