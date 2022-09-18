@@ -17,43 +17,56 @@
 
 ## Exercise
 
-Today we will be building a [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
+1. create an account at [Netlify](https://www.netlify.com)
+2. create an account at [Figma](https://www.figma.com)
+
+Today we will be examining Scaleable Vector Graphics by building a simple [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
 
 We will continue to work with JavaScript - adding some additional methods to our toolbelt (querySelectorAll, data attributes, spread operators) - and will have a brief introduction to a [D3](https://d3js.org) method.
 
 ## SVG
 
-Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation. - [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
+Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation - [Wikipedia](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 
 SVG is to images what illustration is to photography. SVG is widely used in web development as an image format.
 
-For all but the simplest illustrations you typically do not code SVG by hand. However it is very important to understand the format as it is central to data visualization.
+You typically do not code SVG by hand for data visualizations but use various libraries written mostly in JavaScript. However it is very important to have an understanding of the format.
 
-For an exhaustive set of articles about using SVG in development see [CSS Tricks](https://css-tricks.com/tag/svg/).
+For an good set of articles about using SVG in development see [CSS Tricks](https://css-tricks.com/tag/svg/).
 
-See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/SVG) for full SVG documentation.
+See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/SVG) for full SVG documentation. They also provide a good [tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial) if you wish to get more in depth with SVG.
 
 1. as the `src` for an image tag
 
-Scaffold a new `index.html` HTML file with Emmet in the `app` folder and add the following to the body:
+Create a new `index.html` HTML in the `app` folder and add the following code:
 
 ```html
-<style>
-  img {
-    width: 100px;
-  }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="../samples/illustrations/exports/SVG/pizza.svg" alt="" />
+    <img src="../samples/illustrations/exports/SVG/rat.svg" alt="" />
+    <img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
+  </body>
+</html>
 ```
 
-```html
-<img src="../samples/illustrations/exports/SVG/pizza.svg" alt="" />
-<img src="../samples/illustrations/exports/SVG/rat.svg" alt="" />
-<img src="../samples/illustrations/exports/SVG/trashcan.svg" alt="" />
-```
+The icons here were created and exported from Adobe Illustrator.
 
-The icons here were created and exported from Adobe Illustrator. (The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.)
+The file, `icons.ai`, is available in the `samples/illustrations` directory. The exported icons are in `samples/illustrations/exports/SVG`.
 
-2. these images can be inserted into the document via CSS:
+1. these images can also be inserted into the document via CSS:
 
 ```html
 <style>
@@ -195,7 +208,7 @@ _Positions are measured in pixels from the top left corner, with the positive x 
 
 ![grid](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Positions/canvas_default_grid.png)
 
-This is different than the way you're taught to graph in math class (in SVG the y axis is flipped).
+This is different than the way you're taught to graph in geometry (in SVG the y axis is flipped).
 
 <img style="background-color: white; width: 220px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Cartesian-coordinate-system.svg/500px-Cartesian-coordinate-system.svg.png" />
 
@@ -323,7 +336,7 @@ Some additional SVG shapes and attributes:
 
 A `<path>` is the most versatile and commonly used shape in SVG.
 
-Path elements can draw rectangles, round corners, circles, ellipses, polylines, and polygons - any of the other shapes. For that reason people who implement and work with SVG tend to focus on them.
+Path elements can draw rectangles, round corners, circles, ellipses, polylines, and polygons - any of the other shapes. For that reason people who implement SVG libraries tend to focus on them.
 
 While creating complex paths using a text editor is definitely not recommended, understanding how they work is important and will allow you to identify and repair display issues in SVGs.
 
@@ -336,15 +349,15 @@ The shape of a `<path>` element is defined by one parameter: `d` along with mult
 ```
 
 - The "Move to" command is called with the letter M: `M 10 10`
+- `H` draws a horizontal line, and `V` draws a vertical line
 - "Line To" - `L` - takes two parameters — x and y coordinates — and draws a line from the current position to a new position
-- `H` draws a horizontal line, and `V` draws a vertical line:
 - "Close Path" is called with `Z` and draws a straight line from the current position back to the first point of the path
 
 ```svg
 <path d="M 10 10 H 90 V 90 H 10 Z" fill="transparent" stroke="black"/>
 ```
 
-An uppercase letter specifies absolute coordinates and a lowercase letter specifies relative coordinates.
+The uppercase letters use absolute coordinates based on the docuemnt. Lowercase letters use relative coordinates.
 
 Here's the same shape drawn using relative paths, note the numeric differences:
 
@@ -352,11 +365,9 @@ Here's the same shape drawn using relative paths, note the numeric differences:
 <path d="M 10 10 h 80 v 80 h -80 Z" fill="transparent" stroke="black"/>
 ```
 
-## Curves
+## Bézier Curves
 
-### Bézier Curves
-
-Bézier Curves have two control - `C` - points for each point
+[Bézier Curves](https://en.wikipedia.org/wiki/Bézier_curve) have two control - `C` - points for each point
 
 ![Beziers](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths/cubic_bézier_curves_with_grid.png)
 
@@ -378,7 +389,7 @@ The other type of Bézier curve uses `Q`:
 <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
 ```
 
-### Arcs
+## Arcs
 
 Arcs are sections of circles or ellipses and use an `A` for arc. They create pieces of circles or ellipses in drawings. For instance, a pie chart requires a different arc for each piece.
 
@@ -411,7 +422,7 @@ Arcs are sections of circles or ellipses and use an `A` for arc. They create pie
   stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
 ``` -->
 
-### Gradients and Animation
+## Gradients and Animation
 
 Examine `animation.html` in the gradient-animation directory in the samples folder.
 
@@ -423,10 +434,12 @@ The SVG equivalent of writing a "Hello World" application is making a smiley fac
 
 [Figma](https://www.figma.com) is an application commonly used in web design. Create a free account and we will start our face with it.
 
-- create 960 x 500 frame (featureless)
+- create 960 x 500 frame
 - create face and eye shapes and position them
 - export the frame as SVG
-- place in an HTML document:
+- place in an HTML document
+
+E.g.:
 
 ```svg
 <svg
@@ -565,11 +578,11 @@ Create a smile shape in Figma, export it as SVG and add it to the face. e.g.:
 
 `<path d="M6 2C10 23 35 66 103 66C171 66 192 23 194 2" stroke="black" stroke-width="12" fill="none" />`
 
-This will not work. The coordinates are wrong. We need this instead:
+This will not work easily. It is output as a path and not an arc. The coordinates are wrong and would be difficult to correct. We need this instead:
 
 `<path d="M 117,23 A 120, 120, 0, 0, 1, -117, 23 L -98, 19 A100, 100, 0, 0, 0, 98, 19 Z"></path>`
 
-But the above is extremely difficult to write.
+But the above is very difficult to write.
 
 Enter [D3](https://d3js.org).
 
@@ -590,14 +603,14 @@ Import the D3 global object:
   </head>
   <body>
     <div id="root"></div>
-    <script src="scripts.js"></script>
+    <script>
+      ...
+    </script>
   </body>
 </html>
 ```
 
-And use the browser's console to log out the D3 object.
-
-D3 is a huge collection of functionality that we will use to _efficiently_ create data visualizations.
+And use the browser's console to log out the D3 object. D3 is a huge collection of functions that we can use to _efficiently_ create data visualizations.
 
 One place to access documentation is on the project's [Github page](https://github.com/d3/d3/blob/main/API.md).
 
@@ -613,9 +626,7 @@ The circumference of a circle with the radius r is `2πr`.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Pi_eq_C_over_d.svg/440px-Pi_eq_C_over_d.svg.png" style="background-color: white; width: 220px;" />
 
-To create an arc we use the D3 method and call it for the path's `d` parameter.
-
-The D3 [arc method](https://www.d3indepth.com/shapes/#arc-generator) requires `innerRadius`, `outerRadius`, `startAngle`, and `endAngle` as parameters.
+To create an arc we use the D3 arc method. The D3 [arc method](https://www.d3indepth.com/shapes/#arc-generator) requires `innerRadius`, `outerRadius`, `startAngle`, and `endAngle` as parameters.
 
 Here's how we can start using it:
 
@@ -700,7 +711,7 @@ You can soften the angles by adding a `cornerRadius` parameter.
 
 ## Creating SVG Elements
 
-SVG is a domain specific language so we use `document.createElementNS` instead of `document.createElement` JavaScript.
+SVG is a domain specific language so we use `document.createElementNS` instead of `document.createElement` in JavaScript.
 
 ```js
 const width = 960;
@@ -720,6 +731,7 @@ const mouthArc = d3
   .outerRadius(mouthWidth + mouthRadius)
   .startAngle(Math.PI / 2 + 0.2)
   .endAngle((Math.PI * 3) / 2 - 0.2);
+  .cornerRadius(8)
 
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 svg.setAttribute("width", width);

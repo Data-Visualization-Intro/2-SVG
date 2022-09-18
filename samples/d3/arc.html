@@ -11,13 +11,13 @@
     <script>
       d3.select("body").append("h2").text("d3.arc()");
 
-      var svg = d3
+      let svg = d3
         .select("body")
         .append("svg")
         .append("g")
         .attr("transform", "translate(150,50)");
 
-      var arc = d3
+      let arc = d3
         .arc()
         .innerRadius(40)
         .outerRadius(45)
