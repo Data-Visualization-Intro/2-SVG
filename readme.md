@@ -761,7 +761,7 @@ document.querySelector("#root").appendChild(svg);
 
 Review the file `bar-chart.html` in the `samples` folder. This was the file we created in the first session.
 
-We will revise this to use SVG instead of HTML.
+We will revise this in a new HTML document to use SVG instead of HTML as shown below:
 
 ```html
 <!DOCTYPE html>
