@@ -7,6 +7,7 @@
   - [Stacking](#stacking)
   - [SVG Coordinate Space](#svg-coordinate-space)
   - [Creating SVG Elements](#creating-svg-elements)
+  - [SVG and JS](#svg-and-js)
   - [Notes](#notes)
   - [Homework](#homework)
   - [Exercise: Color Wheel](#exercise-color-wheel)
@@ -754,6 +755,63 @@ const mySVG = `
 
 svg.innerHTML = mySVG;
 document.querySelector("#root").appendChild(svg);
+```
+
+## SVG and JS
+
+Review the file `bar-chart.html` in the `samples` folder. This was the file we created in the first session.
+
+We will revise this to use SVG instead of HTML.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating SVG with JavaScript</title>
+    <style>
+      body {
+        font: 1rem/1.5 sans-serif;
+        background-color: black;
+        color: white;
+      }
+      svg {
+        width: 100%;
+        height: 300px;
+      }
+      .dv-bar {
+        fill: steelblue;
+      }
+    </style>
+  </head>
+
+  <body id="top">
+    <h1>Creating SVG with JavaScript</h1>
+
+    <script>
+      const body = document.querySelector("body");
+      let data = [40, 80, 150, 160, 230, 420];
+      let spacing = 30;
+
+      // NOTE: cannot use "var chart = document.createElement("svg");"
+      const chart = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+
+      for (let i = 0; i < data.length; i++) {
+        //prettier-ignore
+        chart.innerHTML += `
+        <rect class="dv-bar" x="0" y=${spacing * i} width=${data[i]} height="20" fill="green" />`;
+        console.log(i);
+      }
+
+      body.append(chart);
+    </script>
+  </body>
+</html>
 ```
 
 ## Notes
