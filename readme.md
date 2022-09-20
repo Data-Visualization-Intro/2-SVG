@@ -19,7 +19,7 @@
 ## Exercise
 
 1. create an account at [Netlify](https://www.netlify.com)
-2. create an account at [Figma](https://www.figma.com)
+2. upload homework
 
 Today we will be examining Scaleable Vector Graphics by building a simple [smiley face emoji](https://dataviz-exercises.netlify.app/emoji/index.html)
 
