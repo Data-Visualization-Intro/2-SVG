@@ -931,6 +931,12 @@ And another example:
 1. Customize your smiley emoji to give it personality, embed it in a webpage and use it as an icon (a favicon that appears in the browser tab) on that page
 2. Last class you were asked to think of a simple dataset and then choose a chart type from Highcharts to visualize it. Now, we reverse the order of operations. I provide a chart type and you must come up with a dataset that is suitable for it. Create a [Polar Area Chart](https://www.chartjs.org/docs/latest/charts/polar.html) using Chart.js to visualize a new dataset of your own choosing/devise.
 
+The polar area diagram is used to plot cyclic phenomena (e.g., count of deaths by month).
+
+`https://en.wikipedia.org/wiki/Florence_Nightingale#/media/File:Nightingale-mortality.jpg`
+
+`https://datavizproject.com/data-type/polar-area-chart/`
+
 You can use the [Chart.js documentation](https://www.chartjs.org/docs/latest/) to help you. You can also use the [Chart.js samples](https://www.chartjs.org/samples/latest/) to help you.
 
 ## Exercise: Color Wheel
