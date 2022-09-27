@@ -433,7 +433,9 @@ Note the use of `<defs>` to define the gradients and `fill="url(#land1-gradient)
 
 The SVG equivalent of writing a "Hello World" application is making a smiley face emoticon.
 
-[Figma](https://www.figma.com) is an application commonly used in web design. Create a free account and we will start our face with it.
+[Figma](https://www.figma.com) is an application commonly used in web design. In addition to a web app they offer a [desktop app](https://www.figma.com/downloads/) for Mac and Windows. It's free for personal use.
+
+Create a free account and we will start our face with it.
 
 - create 960 x 500 frame
 - create face and eye shapes and position them
@@ -494,7 +496,7 @@ const mySVG = `<svg width=${width} height=${height}>
   <g transform=${`translate(${centerX},${centerY})`}>
     <circle cx="0" cy="0" r="4" />
     <line x1="-480" x2="480" y1="0" y2="0" stroke="black" stroke-width="2" />
-    <line x1="0" x2="" y1="-250" y2="250" stroke="black" stroke-width="2" />
+    <line x1="0" x2="0" y1="-250" y2="250" stroke="black" stroke-width="2" />
   </g>
 </svg>`;
 
@@ -565,6 +567,7 @@ const mySVG = `<svg width=${width} height=${height}>
       <circle cx="0" cy="0" r="4" />
       <line x1=${-centerX} x2=${centerX} y1="0" y2="0" />
       <line x1="0" x2="0" y1=${-centerY} y2=${centerY} />
+      <text x=${text.x} y=${text.y}> .${text.x}, ${text.y} point</text>
     </g>
 
   </svg>`;
@@ -590,38 +593,20 @@ Enter [D3](https://d3js.org).
 Import the D3 global object:
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>emoji</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
-    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script>
-      ...
-    </script>
-  </body>
-</html>
+<screipt src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></screipt>
 ```
 
 And use the browser's console to log out the D3 object. D3 is a huge collection of functions that we can use to _efficiently_ create data visualizations.
 
 One place to access documentation is on the project's [Github page](https://github.com/d3/d3/blob/main/API.md).
 
-See `samples/d3/index.html` for a glimpse of D3 in action.
+See `samples/d3/` for a glimpse of D3 in action.
 
 In our case we will to create a portion of a circle in order to create the smile. Since handcoding an arc is diffiult, let's use D3's [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc)
 
 <!-- (Here's an [article](https://medium.com/@mbostock/introducing-d3-shape-73f8367e6d12) from 2015 introducing d3 shape.) -->
 
-Note that D3 arc uses [pi](https://en.wikipedia.org/wiki/Pi) - the ratio of a circle's circumference to its diameter.
+Note that D3 arc references [pi](https://en.wikipedia.org/wiki/Pi) - the ratio of a circle's circumference to its diameter.
 
 The circumference of a circle with the radius r is `2πr`.
 
@@ -675,9 +660,11 @@ const strokeWidth = 20;
 const eyeOffsetX = 90;
 const eyeOffsetY = 70;
 const eyeRadius = 30;
+// NEW
 const mouthWidth = 100;
 const mouthRadius = 20;
 
+// NEW
 const mouthArc = d3
   .arc()
   .innerRadius(mouthWidth)
@@ -791,7 +778,7 @@ We will revise this in a new HTML document to use SVG instead of HTML as shown b
     <h1>Creating SVG with JavaScript</h1>
 
     <script>
-      const body = document.querySelector("body");
+      const firstParagraph = document.querySelector("p");
       let data = [40, 80, 150, 160, 230, 420];
       let spacing = 30;
 
@@ -808,10 +795,30 @@ We will revise this in a new HTML document to use SVG instead of HTML as shown b
         console.log(i);
       }
 
-      body.append(chart);
+      firstParagraph.after(chart);
     </script>
   </body>
 </html>
+```
+
+Add text to the file (see `bar-chart-text.html` in the `samples` folder).Alter the script to use a `for...in` loop:
+
+```js
+// for (let i = 0; i < data.length; i++){
+//     chart.innerHTML += `
+//     <rect x="0" y=${i * 30} width=${data[i]} height="20" fill="steelblue" />
+//     <text class="dv-text" x=${data[i] - 30} y=${spacing * i + 16}> ${data[i]} </text>
+//     `
+//     console.log(i)
+// }
+
+for (let dataPoint in data) {
+  chart.innerHTML += `
+  <rect x="0" y=${dataPoint * 30} width=${
+    data[dataPoint]
+  } height="20" fill="steelblue" />
+  `;
+}
 ```
 
 ## Notes
@@ -930,6 +937,12 @@ And another example:
 
 1. Customize your smiley emoji to give it personality, embed it in a webpage and use it as an icon (a favicon that appears in the browser tab) on that page
 2. Last class you were asked to think of a simple dataset and then choose a chart type from Highcharts to visualize it. Now, we reverse the order of operations. I provide a chart type and you must come up with a dataset that is suitable for it. Create a [Polar Area Chart](https://www.chartjs.org/docs/latest/charts/polar.html) using Chart.js to visualize a new dataset of your own choosing/devise.
+
+The polar area diagram is used to plot cyclic phenomena (e.g., count of deaths by month).
+
+`https://en.wikipedia.org/wiki/Florence_Nightingale#/media/File:Nightingale-mortality.jpg`
+
+`https://datavizproject.com/data-type/polar-area-chart/`
 
 You can use the [Chart.js documentation](https://www.chartjs.org/docs/latest/) to help you. You can also use the [Chart.js samples](https://www.chartjs.org/samples/latest/) to help you.
 
