@@ -1145,10 +1145,3 @@ function showColor(event) {
   document.querySelector(".info").innerHTML = infoContent;
 }
 ```
-
-```
-A4SLYmQyNjE3NjdjZGU4FFRLq8YbJmSwUAK8jhvVAw/NPgMbhr
-zhraANFm9RSZyYYgWGET44AsFN1maY1jKsmV2Ehpozjat8s4Ph
-Gnej56S0cHv3Arh/UeMyvMVIgSHd33pQ7l9toKt4IiGmQgvdVh
-quCNpKIzuv8jj6oBVL6hgBGXW7V83LMv2XodhQ8UMnS89JuMlc
-```
