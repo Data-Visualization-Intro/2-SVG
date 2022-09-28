@@ -13,15 +13,15 @@
             color: white;
         }
         .dv-bar {
-            background: steelblue;
-            padding: 3px;
-            margin: 4px;
+            fill: steelblue;
             }
-        .dv-container {
-            font: 10px sans-serif;
-            text-align: right;
-            color: white;
-            }
+        svg {
+          width: 100%;
+          height: 340px;
+        }
+        text {
+          fill: white
+        }
     </style>
   </head>
 
@@ -36,15 +36,18 @@
       var firstParagraph = document.querySelector("p");
 
       let data = [40, 80, 150, 160, 230, 420];
+      const spacing = 30 
 
-      var chart = document.createElement("div");
-      chart.className = "dv-container";
+      const chart = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
 
-      for (let dataPoint in data) {
+      for (let i = 0; i < data.length; i++ ){
         chart.innerHTML += `
-        <div class="dv-bar" style="width: ${data[dataPoint]}px;">
-            ${data[dataPoint]}
-        </div>`;
+        <rect class="dv-bar" height="20" x="0" y=${spacing * i} width=${data[i]} />
+        <text class="dv-text" x=${data[i] + 4} y=${spacing * i + 16}> ${data[i]} </text>
+        `
       }
 
       firstParagraph.after(chart);

@@ -13,22 +13,67 @@
     />
 
     <style>
+      body {
+        margin: 0;
+      }
       svg {
-        width: 640px;
-        height: 480px;
-        border: 1px solid;
+        border: 2px solid gray;
       }
     </style>
   </head>
   <body>
-    <svg>
-      <g style="transform: translate(50%, 50%)">
-        <circle cx="0" cy="0" r="100" fill="green" />
-      </g>
-    </svg>
+    <div id="root"></div>
 
-    <svg>
-      <path d="M 10 10 H 90 V 90 H 10 Z" fill="transparent" stroke="black" />
-    </svg>
+    <script src="https://unpkg.com/d3@7.3.0/dist/d3.min.js"></script>
+    <script>
+      const width = 960;
+      const height = 500;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const strokeWidth = 20;
+      const eyeOffsetX = 90;
+      const eyeOffsetY = 70;
+      const eyeRadius = 30;
+
+      const text = {
+        x: 200,
+        y: 200,
+      };
+
+      const mouthArc = d3
+        .arc()
+        .innerRadius(100)
+        .outerRadius(120)
+        .startAngle(2)
+        .endAngle(4.25)
+        .cornerRadius(8);
+
+      const mySVG = `<svg width=${width} height=${height}>
+        <g transform=${`translate(${centerX},${centerY})`}>
+          <circle
+            r=${centerY - strokeWidth / 2}
+            fill="yellow"
+            stroke="black"
+            stroke-width=${strokeWidth}
+          />
+          <circle cx=${-eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
+          <circle cx=${eyeOffsetX} cy=${-eyeOffsetY} r=${eyeRadius} />
+
+          <path d=${mouthArc()} />
+
+        </g>
+
+        <g transform=${`translate(${centerX},${centerY})`} stroke="black" stoke-width="2">
+          <circle cx="0" cy="0" r="4" />
+          <line x1=${-centerX} x2=${centerX} y1="0" y2="0" />
+          <line x1="0" x2="0" y1=${-centerY} y2=${centerY} />
+          <text x=${text.x} y=${text.y}> .${text.x}, ${text.y} point</text>
+        </g>
+
+      </svg>`;
+
+      const rootElement = document.getElementById("root");
+      rootElement.innerHTML = mySVG;
+    </script>
   </body>
 </html>
