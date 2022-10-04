@@ -46,23 +46,36 @@
       svg.setAttribute("width", width);
       svg.setAttribute("height", height);
 
-      const pieArc = d3
-        .arc()
-        .innerRadius(0)
-        .outerRadius(360)
-        .startAngle(Math.PI / 2)
-        .endAngle((Math.PI * 3) / 2);
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      svg.appendChild(group);
+
+      const pieArc = d3.arc().innerRadius(0).outerRadius(360);
 
       let colorApp = "";
 
       for (let i = 0; i < colorNames.length; i++) {
-        colorApp += `<path fill=${hexCodes[i]} d=${pieArc()} />`;
+        colorApp += `<path data-idx=${i} fill=${hexCodes[i]} d=${pieArc({
+          startAngle: (i / colorNames.length) * 2 * Math.PI,
+          endAngle: ((i + 1) / colorNames.length) * 2 * Math.PI,
+        })} />`;
       }
 
-      svg.innerHTML = colorApp;
-      console.log(svg);
+      group.innerHTML = colorApp;
 
-      document.getElementById("root").innerHTML = colorApp;
+      document.getElementById("root").append(svg);
+
+      document.addEventListener("click", showColor);
+
+      function showColor(event) {
+        // console.log(event.target.dataset.idx);
+        if (!event.target.dataset.idx) return;
+        let colorId = event.target.dataset.idx;
+        let infoContent = `
+    <h3>Color name: ${colorNames[colorId]}<h3>
+    <h3>Color hex code: ${hexCodes[colorId]}<h3>
+    <div class="colorChip" style="background-color: ${hexCodes[colorId]}"></div>`;
+        document.querySelector(".info").innerHTML = infoContent;
+      }
     </script>
   </body>
 </html>
