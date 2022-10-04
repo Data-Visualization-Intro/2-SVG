@@ -1072,7 +1072,8 @@ for (let i = 0; i < colorNames.length; i++) {
 svg.innerHTML = colorApp;
 console.log(svg);
 
-document.getElementById("root").innerHTML = colorApp;
+// document.getElementById("root").innerHTML = colorApp;
+document.getElementById("root").append(svg);
 ```
 
 Add a group (`<g>`) to center the paths:
@@ -1106,7 +1107,7 @@ group.innerHTML = colorApp;
 document.getElementById("root").append(svg);
 ```
 
-Set the start angle and end angle in the for loop (see d3 [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc) ):
+Set the startAngle and endAngle in the for loop (see d3 [arc method](https://github.com/d3/d3-shape/blob/v3.1.0/README.md#arc) ):
 
 ```js
 for (let i = 0; i < colorNames.length; i++) {
