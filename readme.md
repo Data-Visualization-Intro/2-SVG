@@ -1079,7 +1079,8 @@ for (let i = 0; i < colorNames.length; i++) {
 svg.innerHTML = colorApp;
 console.log(svg);
 
-document.getElementById("root").innerHTML = colorApp;
+// document.getElementById("root").innerHTML = colorApp;
+document.getElementById("root").append(svg);
 ```
 
 Add a group (`<g>`) to center the paths:
